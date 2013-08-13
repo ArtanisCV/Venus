@@ -21,12 +21,15 @@ class JobRunner(threading.Thread):
             job = self.jobManager.popJob()
 
             if job is not None:
-                if job.jobHandler is not None:
-                    result = job.jobHandler(job.args)
-                else:
-                    result = None
+                try:
+                    if job.jobHandler is not None:
+                        result = job.jobHandler(job.args)
+                    else:
+                        result = None
 
-                self.jobManager.notifyJobFinished(job.callback, result)
+                    self.jobManager.notifyJobFinished(job.callback, result)
+                except:
+                    pass
 
 
 class JobManager(object):
