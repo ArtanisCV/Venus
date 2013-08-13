@@ -12,13 +12,13 @@ class Job(object):
 
 
 class JobRunner(threading.Thread):
-    def __init__(self, jobRunner):
+    def __init__(self, jobManager):
         super(JobRunner, self).__init__()
-        self.jobRunner = jobRunner
+        self.jobManager = jobManager
 
     def run(self):
-        while not self.jobRunner.closed:
-            job = self.jobRunner.popJob()
+        while not self.jobManager.closed:
+            job = self.jobManager.popJob()
 
             if job is not None:
                 if job.jobHandler is not None:
@@ -26,7 +26,7 @@ class JobRunner(threading.Thread):
                 else:
                     result = None
 
-                self.jobRunner.notifyJobFinished(job.callback, result)
+                self.jobManager.notifyJobFinished(job.callback, result)
 
 
 class JobManager(object):
