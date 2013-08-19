@@ -129,18 +129,17 @@ class Vectorizer:
         grads = [0] * self.num
         pre = 2 ** (self.max_j + 1 - j)
         for qi, q in enumerate(Q):
-            left = pre * (k.x + q.x * 0.5)
-            right = pre * (k.x + q.x * 0.5 + 0.5)
-            bottom = pre * (k.y + q.y * 0.5 + 0.5)
-            top = pre * (k.y + q.y * 0.5)
             fac = self.psi(Point(normalize(p.x), normalize(p.y)), E[ei], j, k)
+
             for section, indice in self.contour.each_with_indice():
-                section = (normalize(pt[ip]) \
-                           for pt in section for ip in xrange(2))
-                left, right = normalize(left), normalize(right)
-                bottom, top = normalize(bottom), normalize(top)
+                section = (normalize(pt[ip]) for pt in section for ip in xrange(2))
+                left = pre * (k.x + q.x * 0.5) / 2 ** j
+                right = pre * (k.x + q.x * 0.5 + 0.5) / 2 ** j
+                bottom = pre * (k.y + q.y * 0.5 + 0.5) / 2 ** j
+                top = pre * (k.y + q.y * 0.5) / 2 ** j
                 sec_grads = self.contour.get_grads(section, ei, k, j, q, sign[ei][qi],
                                                    left, right, bottom, top)
+
                 for i, idx in enumerate(indice):
                     grads[idx * 2] += fac * sec_grads[i * 2]
                     grads[idx * 2 + 1] += fac * sec_grads[i * 2 + 1]
@@ -148,38 +147,26 @@ class Vectorizer:
 
     def dLike_dX(self):
         raster = Rasterizer(self.contour, self.w, self.h).get_fast()
-        raster = np.array(np.asarray(raster) * 255 + 0.5, np.uint8)
+        raster = np.array(np.asarray(raster) * 255 + 0.5, np.float64)
         grads = [0] * self.num
-        # for x, y in self.lattice:
-        #     p = Point(x, y)
-        #
-        #     # dR/dX
-        #     grads_R = self.dc_dX(p, 0, Point(0, 0), 0)
-        #     for j in xrange(self.max_j + 1):
-        #         for kx in xrange(2 ** j):
-        #             for ky in xrange(2 ** j):
-        #                 k = Point(kx, ky)
-        #                 for ei in xrange(1, 4):
-        #                     addmul(grads_R, self.dc_dX(p, j, k, ei))
-        #     addmul(grads, grads_R, 2 * (float(raster[y, x]) - float(self.org_img[y, x])))
+        for x, y in self.lattice:
+            p = Point(x, y)
 
-        p = Point(1, 2)
+            # dR/dX
+            grads_R = self.dc_dX(p, 0, Point(0, 0), 0)
+            for j in xrange(self.max_j + 1):
+                for kx in xrange(2 ** j):
+                    for ky in xrange(2 ** j):
+                        k = Point(kx, ky)
+                        for ei in xrange(1, 4):
+                            addmul(grads_R, self.dc_dX(p, j, k, ei))
+            addmul(grads, grads_R, 2 * (float(raster[y, x]) - float(self.org_img[y, x])))
 
-        # dR/dX
-        grads_R = self.dc_dX(p, 0, Point(0, 0), 0)
-        for j in xrange(self.max_j + 1):
-            for kx in xrange(2 ** j):
-                for ky in xrange(2 ** j):
-                    k = Point(kx, ky)
-                    for ei in xrange(1, 4):
-                        addmul(grads_R, self.dc_dX(p, j, k, ei))
-
-        addmul(grads, grads_R, 2 * (float(raster[2, 1]) - float(self.org_img[2, 1])))
         return grads
 
     def like(self):
         raster = Rasterizer(self.contour, self.w, self.h).get_fast()
-        raster = np.array(np.asarray(raster) * 255 + 0.5, np.uint8)
+        raster = np.array(np.asarray(raster) * 255 + 0.5, np.float)
         s = 0
         for x, y in self.lattice:
             s += (float(raster[y, x]) - float(self.org_img[y, x])) ** 2
@@ -192,23 +179,38 @@ if __name__ == '__main__':
     import cv2, time
     from contour import *
 
-    oriPath = [1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3]
-    optPath = [1, 1, 3.5, 1, 7, 3, 7, 7, 3, 7, 1, 3]
+    def f(X, printLike=True):
+        contour = convertPathToContour(X)
+        like = Vectorizer(contour, raster).like()
+        if printLike:
+            print like
+        return like
 
-    appPaths = [[1, 1, 3.5002, 1, 7, 3, 7, 7, 3, 7, 1, 3],
-               [1, 1, 3.4998, 1, 7, 3, 7, 7, 3, 7, 1, 3],
-               [1, 1, 3.51, 1, 7, 3, 7, 7, 3, 7, 1, 3],
-               [1, 1, 3.49, 1, 7, 3, 7, 7, 3, 7, 1, 3],
-               [1, 1, 3.6, 1, 7, 3, 7, 7, 3, 7, 1, 3],
-               [1, 1, 3.4, 1, 7, 3, 7, 7, 3, 7, 1, 3]]
+    def fPrime(X, eps=1e-4):
+        X = X.tolist()
+        grads = [0] * len(X)
+
+        for i in range(len(X)):
+            appPathLarge = X[:]
+            appPathLarge[i] += eps
+
+            appPathSmall = X[:]
+            appPathSmall[i] -= eps
+
+            grads[i] = (f(appPathLarge, False) - f(appPathSmall, False)) / (2 * eps)
+
+        return np.asarray(grads)
+
+    oriPath = [1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3]
+    optPath = [1, 1, 4, 1, 7, 3, 7, 7, 3, 7, 1, 3]
 
     def convertPathToContour(path):
-        pts = [(path[i], path[i+1]) for i in xrange(0, len(path), 2)]
+        pts = [(path[i], path[i + 1]) for i in xrange(0, len(path), 2)]
         return CubicBezier.Contour(pts)
 
     # ts = time.time()
     raster = Rasterizer(convertPathToContour(oriPath), 8, 8).get_fast()
-    raster = np.array(np.asarray(raster) * 255 + 0.5, np.uint8)
+    raster = np.array(np.asarray(raster) * 255 + 0.5, np.float)
     cv2.imwrite('CubicBezier.png', raster)
     # print time.time() - ts, ' secs'
 
@@ -216,27 +218,12 @@ if __name__ == '__main__':
     contour = convertPathToContour(optPath)
     grads = Vectorizer(contour, raster).dLike_dX()
     print grads
-    like = Vectorizer(contour, raster).like()
-    print like
+    # like = Vectorizer(contour, raster).like()
+    # print like
     # print time.time() - ts, ' secs'
 
-    for appPath in appPaths:
-        print appPath
+    print fPrime(np.asarray(optPath), 1e-4)
 
-        optC = convertPathToContour(optPath)
-        appC = convertPathToContour(appPath)
-
-        like1 = Vectorizer(optC, raster).like()
-        like2 = Vectorizer(appC, raster).like()
-        print "Like:", like2
-        print "Der:", (like1 - like2) / (optPath[2] - appPath[2])
-
-    # def f(X):
-    #     contour = convertPathToContour(X)
-    #     s = Vectorizer(contour, raster).like()
-    #     print s
-    #     return s
-    #
     # from scipy import optimize
     # X0 = np.asarray(optPath)
-    # print optimize.fmin_cg(f, X0, epsilon=0.03)
+    # print optimize.fmin_cg(f, X0, fPrime)

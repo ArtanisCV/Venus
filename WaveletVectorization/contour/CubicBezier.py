@@ -1,6 +1,6 @@
 import numpy as np
 from collections import namedtuple
-from util.solver import cubic
+from WaveletVectorization.util.solver import cubic
 
 # -----------------------------------------------------------------------------
 Point = namedtuple('Point', 'x y')
@@ -93,9 +93,9 @@ class CubicBezier:
     # -------------------------------------------------------------------------
 
     def clip_t(self, left, right, bottom, top):
-        def is_t_in(t, eps = 1e-5):
+        def is_t_in(t, eps=1e-5):
             pt = self.evaluate(t)
-            return left-eps<=pt[0]<=right+eps and top-eps<=pt[1]<=bottom+eps
+            return left - eps <= pt[0] <= right + eps and top - eps <= pt[1] <= bottom + eps
 
         ax = -self.x0 + 3*self.x1 - 3*self.x2 + self.x3
         bx = 3*self.x0 - 6*self.x1 + 3*self.x2
@@ -306,16 +306,16 @@ class CubicBezier:
         elif q.x == 1 and q.y == 0: return       2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) + (k.x+1) * (self.L_c11_y3(t1) - self.L_c11_y3(t0))
         else:                       return       2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) + (k.x+1) * (self.L_c11_y3(t1) - self.L_c11_y3(t0))
 
-    def get_grads(self, section, ei, k,j,q,sign, left, right, bottom, top):
+    def get_grads(self, section, ei, k, j, q, sign, left, right, bottom, top):
         partial_matrix = (
-           (self.partial_c00_x0,  self.partial_c01_x0,  self.partial_c10_x0,  self.partial_c11_x0   ),
-           (self.partial_c00_y0,  self.partial_c01_y0,  self.partial_c10_y0,  self.partial_c11_y0   ),
-           (self.partial_c00_x1,  self.partial_c01_x1,  self.partial_c10_x1,  self.partial_c11_x1   ),
-           (self.partial_c00_y1,  self.partial_c01_y1,  self.partial_c10_y1,  self.partial_c11_y1   ),
-           (self.partial_c00_x2,  self.partial_c01_x2,  self.partial_c10_x2,  self.partial_c11_x2   ),
-           (self.partial_c00_y2,  self.partial_c01_y2,  self.partial_c10_y2,  self.partial_c11_y2   ),
-           (self.partial_c00_x3,  self.partial_c01_x3,  self.partial_c10_x3,  self.partial_c11_x3   ),
-           (self.partial_c00_y3,  self.partial_c01_y3,  self.partial_c10_y3,  self.partial_c11_y3   )
+           (self.partial_c00_x0,  self.partial_c01_x0,  self.partial_c10_x0,  self.partial_c11_x0),
+           (self.partial_c00_y0,  self.partial_c01_y0,  self.partial_c10_y0,  self.partial_c11_y0),
+           (self.partial_c00_x1,  self.partial_c01_x1,  self.partial_c10_x1,  self.partial_c11_x1),
+           (self.partial_c00_y1,  self.partial_c01_y1,  self.partial_c10_y1,  self.partial_c11_y1),
+           (self.partial_c00_x2,  self.partial_c01_x2,  self.partial_c10_x2,  self.partial_c11_x2),
+           (self.partial_c00_y2,  self.partial_c01_y2,  self.partial_c10_y2,  self.partial_c11_y2),
+           (self.partial_c00_x3,  self.partial_c01_x3,  self.partial_c10_x3,  self.partial_c11_x3),
+           (self.partial_c00_y3,  self.partial_c01_y3,  self.partial_c10_y3,  self.partial_c11_y3)
         )
         grads = [0] * 8
         for t0, t1 in self.clip_t(left, right, bottom, top):
@@ -373,15 +373,15 @@ class Contour:
     # -------------------------------------------------------------------------
 
     def each_with_indice(self):
-        for i in xrange(0, len(self.contour), 3):
+        for i in xrange(0, 1, 3):
             v3 = self.contour[i]
             v2 = self.contour[i-1]
             v1 = self.contour[i-2]
             v0 = self.contour[i-3]
             yield (v0, v1, v2, v3), (i-3, i-2, i-1, i)
 
-    def get_grads(self, section, ei, k,j,q,sign, left, right, bottom, top):
+    def get_grads(self, section, ei, k, j, q, sign, left, right, bottom, top):
         bezier = CubicBezier(*section)
-        return bezier.get_grads(section, ei, k,j,q,sign, left, right, bottom, top)
+        return bezier.get_grads(section, ei, k, j, q, sign, left, right, bottom, top)
 
 # -----------------------------------------------------------------------------

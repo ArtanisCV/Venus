@@ -6,9 +6,6 @@ import thread
 import websocket
 
 
-__author__ = 'Artanis'
-
-
 def on_message(ws, message):
     print message
 
