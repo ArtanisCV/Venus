@@ -1,10 +1,13 @@
-import math, copy, numpy as np
+import math
+import copy
 from collections import namedtuple
+
+import numpy as np
+
 
 # -----------------------------------------------------------------------------
 Point = namedtuple('Point', 'x y')
 # -----------------------------------------------------------------------------
-
 
 class Rasterizer:
     def __init__(self, contour, w, h):
@@ -19,7 +22,7 @@ class Rasterizer:
         self.contour = copy.deepcopy(contour)
         self.contour.process(normalize)
         self.area = self.contour.area()
-        self.lattice = [Point(*normalize((x, y))) \
+        self.lattice = [Point(*normalize((x, y)))
                         for x in xrange(h) for y in xrange(w)]
         # prepare all c
         self.all_c = {}
@@ -39,7 +42,7 @@ class Rasterizer:
 
     def c(self, j, k):
         def transform(section, Q):
-            return (2 ** (j + 1) * p[i] - k[i] * 2 - Q[i] \
+            return (2 ** (j + 1) * p[i] - k[i] * 2 - Q[i]
                     for p in section for i in xrange(2))
 
         Q_00, Q_01 = Point(0, 0), Point(0, 1)
@@ -79,13 +82,12 @@ class Rasterizer:
         px_mat = [px_arr[i * self.w: (i + 1) * self.w] for i in xrange(self.h)]
         return px_mat
 
-    def get_fast(self): # 100x faster than get()
+    def get_fast(self):  # 100x faster than get()
         from util.getpx import get_px as get_cpp
 
         px_arr = get_cpp(self.area, self.max_j, self.all_c, self.lattice)
         px_mat = [px_arr[i * self.w: (i + 1) * self.w] for i in xrange(self.h)]
         return px_mat
-
 
 # -----------------------------------------------------------------------------
 
@@ -109,6 +111,14 @@ class Vectorizer:
         self.contour = contour
         self.lattice = [Point(x, y) for x in xrange(h) for y in xrange(w)]
         self.num = len(self.contour.contour) * 2
+        self.lattice = [(x, y) for x in xrange(h) for y in xrange(w)]
+        # prepare all dc_dX
+        self.all_dc = {}
+        for j in xrange(self.max_j + 1):
+            for kx in xrange(2 ** j):
+                for ky in xrange(2 ** j):
+                    self.all_dc[(j, kx, ky)] = [self.dc_dX(j, Point(kx, ky), ei)
+                                                for ei in xrange(1, 4)]
 
     def psi(self, p, e, j, k):
         def psi_1d(p, e):
@@ -119,64 +129,63 @@ class Vectorizer:
 
         return 2 ** j * psi_1d(2 ** j * p.x - k.x, e.x) * psi_1d(2 ** j * p.y - k.y, e.y)
 
-    def dc_dX(self, p, j, k, ei):
+    def dc_dX(self, j, k, ei):
         def normalize(p):
             return p / float(self.wh)
 
         Q = [Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)]
-        E = [Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)]
-        sign = ((1, 1, 1, 1), (1, -1, 1, -1), (1, 1, -1, -1), (1, -1, -1, 1))
+        sign = ((1, 1, 1, 1), (1, -1, 1, -1), (+1, +1, -1, -1), (+1, -1, -1, +1))
         grads = [0] * self.num
-        pre = 2 ** (self.max_j + 1 - j)
-        for qi, q in enumerate(Q):
-            fac = self.psi(Point(normalize(p.x), normalize(p.y)), E[ei], j, k)
 
-            for section, indice in self.contour.each_with_indice():
-                section = (normalize(pt[ip]) for pt in section for ip in xrange(2))
-                left = pre * (k.x + q.x * 0.5) / 2 ** j
-                right = pre * (k.x + q.x * 0.5 + 0.5) / 2 ** j
-                bottom = pre * (k.y + q.y * 0.5 + 0.5) / 2 ** j
-                top = pre * (k.y + q.y * 0.5) / 2 ** j
-                sec_grads = self.contour.get_grads(section, ei, k, j, q, sign[ei][qi],
-                                                   left, right, bottom, top)
+        for section, indice in self.contour.each_with_indice():
+            section = list(normalize(pt[ip]) for pt in section for ip in xrange(2))
 
+            for qi, q in enumerate(Q):
+                left = (k.x + q.x * 0.5) / 2 ** j
+                right = (k.x + q.x * 0.5 + 0.5) / 2 ** j
+                bottom = (k.y + q.y * 0.5 + 0.5) / 2 ** j
+                top = (k.y + q.y * 0.5) / 2 ** j
+
+                sec_grads = self.contour.get_grads(section, ei, k, j, q,
+                                                   sign[ei][qi], left, right, bottom, top)
                 for i, idx in enumerate(indice):
-                    grads[idx * 2] += fac * sec_grads[i * 2]
-                    grads[idx * 2 + 1] += fac * sec_grads[i * 2 + 1]
+                    grads[idx * 2] += sec_grads[i * 2]
+                    grads[idx * 2 + 1] += sec_grads[i * 2 + 1]
         return grads
 
     def dLike_dX(self):
+        E = [Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)]
         raster = Rasterizer(self.contour, self.w, self.h).get_fast()
-        raster = np.array(np.asarray(raster) * 255 + 0.5, np.float64)
+        raster = np.asarray(raster)
         grads = [0] * self.num
         for x, y in self.lattice:
-            p = Point(x, y)
-
+            p = Point(x / float(self.wh), y / float(self.wh))
             # dR/dX
-            grads_R = self.dc_dX(p, 0, Point(0, 0), 0)
+            grads_R = [0] * self.num
+            k0 = Point(0, 0)
+            addmul(grads_R, self.dc_dX(0, k0, 0), self.psi(p, E[0], 0, k0))
             for j in xrange(self.max_j + 1):
                 for kx in xrange(2 ** j):
                     for ky in xrange(2 ** j):
                         k = Point(kx, ky)
+                        dcs = self.all_dc[(j, kx, ky)]
                         for ei in xrange(1, 4):
-                            addmul(grads_R, self.dc_dX(p, j, k, ei))
-            addmul(grads, grads_R, 2 * (float(raster[y, x]) - float(self.org_img[y, x])))
-
+                            addmul(grads_R, dcs[ei - 1], self.psi(p, E[ei], j, k))
+            addmul(grads, grads_R, 1)
+                   #2 * (float(raster[x, y]) - float(self.org_img[x, y])))
         return grads
 
     def like(self):
         raster = Rasterizer(self.contour, self.w, self.h).get_fast()
-        raster = np.array(np.asarray(raster) * 255 + 0.5, np.float)
+        raster = np.asarray(raster)
         s = 0
         for x, y in self.lattice:
             s += (float(raster[y, x]) - float(self.org_img[y, x])) ** 2
         return s
 
-
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    import cv2, time
     from contour import *
 
     def f(X, printLike=True):
@@ -210,20 +219,18 @@ if __name__ == '__main__':
 
     # ts = time.time()
     raster = Rasterizer(convertPathToContour(oriPath), 8, 8).get_fast()
-    raster = np.array(np.asarray(raster) * 255 + 0.5, np.float)
-    cv2.imwrite('CubicBezier.png', raster)
+    raster = np.array(raster)
     # print time.time() - ts, ' secs'
 
     # ts = time.time()
     contour = convertPathToContour(optPath)
     grads = Vectorizer(contour, raster).dLike_dX()
     print grads
-    # like = Vectorizer(contour, raster).like()
-    # print like
     # print time.time() - ts, ' secs'
 
     print fPrime(np.asarray(optPath), 1e-4)
 
+    #
     # from scipy import optimize
     # X0 = np.asarray(optPath)
     # print optimize.fmin_cg(f, X0, fPrime)
