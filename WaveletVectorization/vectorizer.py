@@ -155,9 +155,19 @@ class Vectorizer:
 
     def dLike_dX(self):
         E = [Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)]
-        raster = Rasterizer(self.contour, self.w, self.h).get_fast()
-        raster = np.asarray(raster)
+        # raster = Rasterizer(self.contour, self.w, self.h).get_fast()
+        # raster = np.asarray(raster)
+        diff = np.ndarray(shape=(8, 8), dtype=np.float64)
+        row = 0
+        for line in file("raster_diff.txt", "r"):
+            tokens = line.strip().split()
+            for j in range(8):
+                diff[row][j] = float(tokens[j])
+            row += 1
+
         grads = [0] * self.num
+        grads_sum = [0] * self.num
+
         for x, y in self.lattice:
             p = Point(x / float(self.wh), y / float(self.wh))
             # dR/dX
@@ -171,8 +181,11 @@ class Vectorizer:
                         dcs = self.all_dc[(j, kx, ky)]
                         for ei in xrange(1, 4):
                             addmul(grads_R, dcs[ei - 1], self.psi(p, E[ei], j, k))
-            addmul(grads, grads_R, 1)
+            print grads_R[1]
+            addmul(grads_sum, grads_R)
+            addmul(grads, grads_R, 2 * diff[x, y])
                    #2 * (float(raster[x, y]) - float(self.org_img[x, y])))
+        print grads_sum
         return grads
 
     def like(self):
