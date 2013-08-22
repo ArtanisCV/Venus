@@ -158,12 +158,12 @@ class Vectorizer:
         # raster = Rasterizer(self.contour, self.w, self.h).get_fast()
         # raster = np.asarray(raster)
         diff = np.ndarray(shape=(8, 8), dtype=np.float64)
-        row = 0
+        i = 0
         for line in file("raster_diff.txt", "r"):
             tokens = line.strip().split()
             for j in range(8):
-                diff[row][j] = float(tokens[j])
-            row += 1
+                diff[i][j] = float(tokens[j])
+            i += 1
 
         grads = [0] * self.num
         grads_sum = [0] * self.num
@@ -181,7 +181,6 @@ class Vectorizer:
                         dcs = self.all_dc[(j, kx, ky)]
                         for ei in xrange(1, 4):
                             addmul(grads_R, dcs[ei - 1], self.psi(p, E[ei], j, k))
-            print grads_R[1]
             addmul(grads_sum, grads_R)
             addmul(grads, grads_R, 2 * diff[x, y])
                    #2 * (float(raster[x, y]) - float(self.org_img[x, y])))
