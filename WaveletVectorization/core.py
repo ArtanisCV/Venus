@@ -83,8 +83,22 @@ def dFp_dp(i, t):
         return 3.0 * t ** 2
 
 
-F = lambda t, para: dF_dp(0, t) * para[0] + dF_dp(1, t) * para[1] + dF_dp(2, t) * para[2] + dF_dp(3, t) * para[3]
-Fp = lambda t, para: dFp_dp(0, t) * para[0] + dFp_dp(1, t) * para[1] + dFp_dp(2, t) * para[2] + dFp_dp(3, t) * para[3]
+def F(t, para):
+    result = 0
+
+    for i in range(4):
+        result += dF_dp(i, t) * para[i]
+
+    return result
+
+
+def Fp(t, para):
+    result = 0
+
+    for i in range(4):
+        result += dFp_dp(i, t) * para[i]
+
+    return result
 
 
 MAX_E = 3
@@ -417,6 +431,61 @@ class Vectorization:
         return t_grads, t_grads_core
 
 
+def approx_dR_dp(i, initContour, imgShape, eps=1e-4):
+    contourLarge = initContour[:]
+    contourLarge[i] += eps
+
+    contourSmall = initContour[:]
+    contourSmall[i] -= eps
+
+    rasterLarge = Rasterization(contourLarge, imgShape).getImg()[0]
+    rasterSmall = Rasterization(contourSmall, imgShape).getImg()[0]
+
+    return (rasterLarge - rasterSmall) / (2.0 * eps)
+
+
+def dLike(initContour, oriImg):
+    diff = Rasterization(initContour, oriImg.shape).getImg()[0] - oriImg
+    grads = [0] * len(initContour)
+    grads_core = [0] * len(initContour)
+
+    for i in range(len(initContour)):
+        dR_dp_mat = approx_dR_dp(i, initContour, oriImg.shape)
+
+        for x in range(diff.shape[0]):
+            for y in range(diff.shape[1]):
+                grads[i] += dR_dp_mat[x][y] * diff[x][y] * 2.0
+                grads_core[i] += dR_dp_mat[x][y]
+
+    return grads, grads_core
+
+
+def like(raster1, raster2):
+    diff = numpy.reshape(raster1 - raster2, (1, raster1.size))
+    return numpy.dot(diff, diff.transpose())[0][0]
+
+
+def approx_dLike(contour, oriImg, eps=1e-4):
+    grads = [0] * len(contour)
+
+    for i in range(len(contour)):
+        contourLarge = contour[:]
+        contourLarge[i] += eps
+
+        contourSmall = contour[:]
+        contourSmall[i] -= eps
+
+        rasterLarge = Rasterization(contourLarge, oriImg.shape).getImg()[0]
+        rasterSmall = Rasterization(contourSmall, oriImg.shape).getImg()[0]
+
+        likeLarge = like(rasterLarge, oriImg)
+        likeSmall = like(rasterSmall, oriImg)
+
+        grads[i] = (likeLarge - likeSmall) / (2.0 * eps)
+
+    return grads
+
+
 if __name__ == "__main__":
     oriPath = [1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3]
     optPath = [1, 1, 4, 1, 7, 3, 7, 7, 3, 7, 1, 3]
@@ -451,15 +520,37 @@ if __name__ == "__main__":
             diff[i][j] = float(tokens[j])
     fd.close()
 
-    grads, grads_core = VectorizeCubicBezier(xPara, yPara, diff).getGrads()
-    print grads_core
-    print grads
-    print
+    # grads, grads_core = VectorizeCubicBezier(xPara, yPara, diff).getGrads()
+    # print grads_core
+    # print grads
 
+    print
+    print "VectorizeTest..."
     grads, grads_core = VectorizeTest(xPara, yPara, diff).getGrads()
     print grads_core
     print grads
-    print
 
-    grads, grads_core = Vectorization(optPath, oriRaster).getGrads()
+    # print
+    # print "Vectorization..."
+    # grads, grads_core = Vectorization(optPath, oriRaster).getGrads()
+    # print grads
+
+    print
+    print "dLike..."
+    grads, grads_core = dLike(optPath, oriRaster)
+    print grads_core
     print grads
+
+    # print
+    # print "Approximate dLike..."
+    # print approx_dLike(optPath, oriRaster)
+
+    # def f(contour, printLike=True):
+    #     l = like(Rasterization(contour, imgShape).getImg()[0], oriRaster)
+    #
+    #     if printLike:
+    #         print l
+    #     return l
+
+    # from scipy import optimize
+    # print optimize.fmin_cg(f, numpy.asarray(optPath), fPrime)
