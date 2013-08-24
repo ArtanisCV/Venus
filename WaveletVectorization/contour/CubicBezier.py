@@ -399,7 +399,7 @@ class Contour:
     # -------------------------------------------------------------------------
 
     def each_with_indice(self): 
-        for i in xrange(3, len(self.contour), 3):
+        for i in xrange(0, len(self.contour), 3):
             v3 = self.contour[i]
             v2 = self.contour[i-1]
             v1 = self.contour[i-2]

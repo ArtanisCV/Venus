@@ -149,8 +149,8 @@ class Vectorizer:
                 sec_grads = self.contour.get_grads(section, ei, k, j, q,
                                                    sign[ei][qi], left, right, bottom, top)
                 for i, idx in enumerate(indice):
-                    grads[idx * 2] += sec_grads[i * 2]
-                    grads[idx * 2 + 1] += sec_grads[i * 2 + 1]
+                    grads[idx * 2] += sec_grads[i * 2] / 8.0
+                    grads[idx * 2 + 1] += sec_grads[i * 2 + 1] / 8.0
         return grads
 
     def dLike_dX(self):

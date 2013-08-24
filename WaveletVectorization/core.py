@@ -265,7 +265,7 @@ class VectorizeCubicBezier:
                 for kx in range(2 ** j):
                     for ky in range(2 ** j):
                         for e in range(MAX_E + 1):
-                            dc_dxi_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e)
+                            dc_dxi_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e) / float(self.rows)  # normalize
 
             for x in range(self.rows):
                 for y in range(self.cols):
@@ -287,7 +287,7 @@ class VectorizeCubicBezier:
                 for kx in range(2 ** j):
                     for ky in range(2 ** j):
                         for e in range(MAX_E + 1):
-                            dc_dyi_mat[j][kx][ky][e] = self.dc_dy(i, j, kx, ky, e)
+                            dc_dyi_mat[j][kx][ky][e] = self.dc_dy(i, j, kx, ky, e) / float(self.cols)  # normalize
 
             for x in range(self.rows):
                 for y in range(self.cols):
@@ -308,8 +308,8 @@ class VectorizeCubicBezier:
 
 # class VectorizeTest:
 #     def __init__(self, xPara, yPara, diff):
-#         self.xPara = xPara
-#         self.yPara = yPara
+#         self.xPara = [para / float(imgShape[0]) for para in xPara]
+#         self.yPara = [para / float(imgShape[1]) for para in yPara]
 #
 #         self.rows = diff.shape[0]
 #         self.cols = diff.shape[1]
@@ -318,8 +318,8 @@ class VectorizeCubicBezier:
 #         self.MAX_J = int(math.ceil(math.log(min(self.rows, self.cols), 2))) - 1
 #         self.MAX_K = 2 ** self.MAX_J - 1
 #
-#         self.Y = lambda t: F(t, yPara)
-#         self.Yp = lambda t: Fp(t, yPara)
+#         self.Y = lambda t: F(t, self.yPara)
+#         self.Yp = lambda t: Fp(t, self.yPara)
 #
 #     def Xi(self, i, xi, t):
 #         result = 0
@@ -355,54 +355,54 @@ class VectorizeCubicBezier:
 #     def inner_c11_jk_x(self, i, xi, t, j, kx, ky):
 #         return 2 ** j * cpsi_1d_jk(self.Xi(i, xi, t), j, kx) * psi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
 #
-#     def inner_dc00_dx(self, i, xi):
+#     def c00_jk_x(self, i, xi):
 #         return quad(lambda t: self.inner_c00_jk_x(i, xi, t), 0, 1)[0]
 #
-#     def inner_dc01_dx(self, i, xi, j, kx, ky):
+#     def c01_jk_x(self, i, xi, j, kx, ky):
 #         return quad(lambda t: self.inner_c01_jk_x(i, xi, t, j, kx, ky), 0, 1)[0]
 #
-#     def inner_dc10_dx(self, i, xi, j, kx, ky):
+#     def c10_jk_x(self, i, xi, j, kx, ky):
 #         return quad(lambda t: self.inner_c10_jk_x(i, xi, t, j, kx, ky), 0, 1)[0]
 #
-#     def inner_dc11_dx(self, i, xi, j, kx, ky):
+#     def c11_jk_x(self, i, xi, j, kx, ky):
 #         return quad(lambda t: self.inner_c11_jk_x(i, xi, t, j, kx, ky), 0, 1)[0]
 #
 #     def dc_dx(self, i, j, kx, ky, e):
 #         if e == 0:
-#             return derivative(lambda xi: self.inner_dc00_dx(i, xi), xPara[i], dx=1e-4)
+#             return derivative(lambda xi: self.c00_jk_x(i, xi), self.xPara[i], dx=1e-4)
 #         elif e == 1:
-#             return derivative(lambda xi: self.inner_dc01_dx(i, xi, j, kx, ky), xPara[i], dx=1e-4)
+#             return derivative(lambda xi: self.c01_jk_x(i, xi, j, kx, ky), self.xPara[i], dx=1e-4)
 #         elif e == 2:
-#             return derivative(lambda xi: self.inner_dc10_dx(i, xi, j, kx, ky), xPara[i], dx=1e-4)
+#             return derivative(lambda xi: self.c10_jk_x(i, xi, j, kx, ky), self.xPara[i], dx=1e-4)
 #         else:
-#             return derivative(lambda xi: self.inner_dc11_dx(i, xi, j, kx, ky), xPara[i], dx=1e-4)
+#             return derivative(lambda xi: self.c11_jk_x(i, xi, j, kx, ky), self.xPara[i], dx=1e-4)
 #
 #     def getGrads(self):
 #         grads = [0.0] * 8
 #         grads_core = [0.0] * 8
 #
 #         for i in range(4):
-#             dc_dxi_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
-#                                      dtype=numpy.float64)
+#             dc_dx_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
+#                                     dtype=numpy.float64)
 #             for j in range(self.MAX_J + 1):
 #                 for kx in range(2 ** j):
 #                     for ky in range(2 ** j):
 #                         for e in range(MAX_E + 1):
-#                             dc_dxi_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e)
+#                             dc_dx_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e) / float(self.rows)
 #
 #             for x in range(self.rows):
 #                 for y in range(self.cols):
 #                     p = (x / float(self.rows), y / float(self.cols))
-#                     g_xi = dc_dxi_mat[0][0][0][0] * psi_2d_jke(p[0], p[1], 0, 0, 0, 0)
+#                     g_x = dc_dx_mat[0][0][0][0] * psi_2d_jke(p[0], p[1], 0, 0, 0, 0)
 #
 #                     for j in range(self.MAX_J + 1):
 #                         for kx in range(2 ** j):
 #                             for ky in range(2 ** j):
 #                                 for e in range(1, MAX_E + 1):
-#                                     g_xi += dc_dxi_mat[j][kx][ky][e] * psi_2d_jke(p[0], p[1], j, kx, ky, e)
+#                                     g_x += dc_dx_mat[j][kx][ky][e] * psi_2d_jke(p[0], p[1], j, kx, ky, e)
 #
-#                     grads[i * 2] += g_xi * self.diff[x][y] * 2.0
-#                     grads_core[i * 2] += g_xi
+#                     grads[i * 2] += g_x * self.diff[x][y] * 2.0
+#                     grads_core[i * 2] += g_x
 #
 #         return grads, grads_core
 
@@ -424,79 +424,100 @@ class VectorizeTest:
         self.Xp = lambda t: Fp(t, self.xPara)
         self.Yp = lambda t: Fp(t, self.yPara)
 
-    def inner_c00_jk(self, t):
-        return cphi_1d(self.X(t)) * phi_1d(self.Y(t)) * self.Yp(t)
+    def Xi(self, i, xi, t):
+        result = 0
 
-    def inner_c01_jk(self, t, j, kx, ky):
-        return -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * phi_1d_jk(self.X(t), j, kx) * self.Xp(t)
-
-    def inner_c10_jk(self, t, j, kx, ky):
-        return 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * phi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
-
-    def inner_c11_jk(self, t, j, kx, ky):
-        return 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * psi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
-
-    def c_jk(self, j, kx, ky, e):
-        if e == 0:
-            return quad(self.inner_c00_jk, 0, 1)[0]
-        elif e == 1:
-            return quad(lambda t: self.inner_c01_jk(t, j, kx, ky), 0, 1)[0]
-        elif e == 2:
-            return quad(lambda t: self.inner_c10_jk(t, j, kx, ky), 0, 1)[0]
-        else:
-            return quad(lambda t: self.inner_c11_jk(t, j, kx, ky), 0, 1)[0]
-
-    def
-
-    def R(self, c_mat, x, y):
-        result = c_mat[0][0][0][0] * psi_2d_jke(x, y, 0, 0, 0, 0)
-
-        for j in range(self.MAX_J + 1):
-            for kx in range(2 ** j):
-                for ky in range(2 ** j):
-                    for e in range(1, MAX_E + 1):
-                        result += c_mat[j][kx][ky][e] * psi_2d_jke(x, y, j, kx, ky, e)
+        for k in range(4):
+            if k != i:
+                result += dF_dp(k, t) * self.xPara[k]
+            else:
+                result += dF_dp(k, t) * xi
 
         return result
+
+    def Xpi(self, i, xi, t):
+        result = 0
+
+        for k in range(4):
+            if k != i:
+                result += dFp_dp(k, t) * self.xPara[k]
+            else:
+                result += dFp_dp(k, t) * xi
+
+        return result
+
+    def inner_dc00_dx(self, i, t):
+        return phi_1d(self.X(t)) * phi_1d(self.Y(t)) * dF_dp(i, t) * self.Yp(t)
+
+    # def inner_dc01_dx(self, i, t, j, kx, ky):
+    #     return -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * \
+    #         derivative(lambda xi: phi_1d_jk(self.Xi(i, xi, t), j, kx) * self.Xpi(i, xi, t), self.xPara[i], dx=1e-3)
+
+    def inner_dc01_dx(self, i, t, j, kx, ky):
+        result = -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * dFp_dp(i, t) * phi_1d_jk(self.X(t), j, kx)
+
+        # X0 = 2 ** j * self.X(0) - kx
+        # X1 = 2 ** j * self.X(1) - kx
+        # mini = min(X0, X1)
+        # maxi = max(X0, X1)
+        # cnt = 0
+        # if mini < 0:
+        #     if maxi > 0:
+        #         cnt += 1
+        #     if maxi > 1:
+        #         cnt -= 1
+        # elif mini < 1:
+        #     if maxi > 1:
+        #         cnt -= 1
+        #
+        # if X0 > X1:
+        #     cnt = -cnt
+        # result += cnt * -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * self.Xp(t)
+
+        return result
+
+    def inner_dc10_dx(self, i, t, j, kx, ky):
+        return 2 ** j * psi_1d_jk(self.X(t), j, kx) * dF_dp(i, t) * phi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
+
+    def inner_dc11_dx(self, i, t, j, kx, ky):
+        return 2 ** j * psi_1d_jk(self.X(t), j, kx) * dF_dp(i, t) * psi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
+
+    def dc_dx(self, i, j, kx, ky, e):
+        if e == 0:
+            return quad(lambda t: self.inner_dc00_dx(i, t), 0, 1)[0]
+        elif e == 1:
+            return quad(lambda t: self.inner_dc01_dx(i, t, j, kx, ky), 0, 1)[0]
+        elif e == 2:
+            return quad(lambda t: self.inner_dc10_dx(i, t, j, kx, ky), 0, 1)[0]
+        else:
+            return quad(lambda t: self.inner_dc11_dx(i, t, j, kx, ky), 0, 1)[0]
 
     def getGrads(self):
         grads = [0.0] * 8
         grads_core = [0.0] * 8
-        eps = 1e-4 / 8.0
 
         for i in range(4):
-            tmp = self.xPara[i]
-
-            self.xPara[i] = tmp + eps
-
-            c1_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
-                                 dtype=numpy.float64)
+            dc_dx_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
+                                    dtype=numpy.float64)
             for j in range(self.MAX_J + 1):
                 for kx in range(2 ** j):
                     for ky in range(2 ** j):
                         for e in range(MAX_E + 1):
-                            c1_mat[j][kx][ky][e] = self.c_jk(j, kx, ky, e)
-
-            self.xPara[i] = tmp - eps
-
-            c2_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
-                                 dtype=numpy.float64)
-            for j in range(self.MAX_J + 1):
-                for kx in range(2 ** j):
-                    for ky in range(2 ** j):
-                        for e in range(MAX_E + 1):
-                            c2_mat[j][kx][ky][e] = self.c_jk(j, kx, ky, e)
-
-            self.xPara[i] = tmp
+                            dc_dx_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e) / float(self.rows)
 
             for x in range(self.rows):
                 for y in range(self.cols):
-                    g1_xi = self.R(c1_mat, x / float(self.rows), y / float(self.cols))
-                    g2_xi = self.R(c2_mat, x / float(self.rows), y / float(self.cols))
-                    gd = (g1_xi - g2_xi) / (2.0 * eps * 8.0)
+                    p = (x / float(self.rows), y / float(self.cols))
+                    g_x = dc_dx_mat[0][0][0][0] * psi_2d_jke(p[0], p[1], 0, 0, 0, 0)
 
-                    grads[i * 2] += gd * self.diff[x][y] * 2.0
-                    grads_core[i * 2] += gd
+                    for j in range(self.MAX_J + 1):
+                        for kx in range(2 ** j):
+                            for ky in range(2 ** j):
+                                for e in range(1, MAX_E + 1):
+                                    g_x += dc_dx_mat[j][kx][ky][e] * psi_2d_jke(p[0], p[1], j, kx, ky, e)
+
+                    grads[i * 2] += g_x * self.diff[x][y] * 2.0
+                    grads_core[i * 2] += g_x
 
         return grads, grads_core
 
@@ -581,6 +602,7 @@ if __name__ == "__main__":
     optPath = [1, 1, 4, 1, 7, 3, 7, 7, 3, 7, 1, 3]
 
     import numpy
+
     numpy.warnings.simplefilter("ignore", Warning)
 
     imgShape = (8, 8)
@@ -606,6 +628,19 @@ if __name__ == "__main__":
     # grads, grads_core = VectorizeCubicBezier(xPara, yPara, diff).getGrads()
     # print grads_core
     # print grads
+
+    # v = VectorizeTest(xPara, yPara, diff)
+    # w = VectorizeCubicBezier(xPara, yPara, diff)
+    # for i in range(4):
+    #     for j in range(3):
+    #         for kx in range(2**j):
+    #             for ky in range(2**j):
+    #                 for e in range(1, 3):
+    #                     g1 = v.dc_dx(i, j, kx, ky, e)
+    #                     g2 = w.dc_dx(i, j, kx, ky, e)
+    #
+    #                     if abs(g1 - g2) > 1e-4:
+    #                         print g1, g2, (i, j, kx, ky, e)
 
     print
     print "VectorizeTest..."
