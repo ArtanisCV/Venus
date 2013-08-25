@@ -101,6 +101,16 @@ def Fp(t, para):
     return result
 
 
+def cubicCoefficients(para):
+    p0, p1, p2, p3 = para
+
+    a = -p0 + 3.0 * p1 - 3.0 * p2 + p3
+    b = 3.0 * p0 - 6.0 * p1 + 3.0 * p2
+    c = -3.0 * p0 + 3.0 * p1
+    d = p0
+
+    return a, b, c, d
+
 MAX_E = 3
 
 
@@ -454,27 +464,7 @@ class VectorizeTest:
     #         derivative(lambda xi: phi_1d_jk(self.Xi(i, xi, t), j, kx) * self.Xpi(i, xi, t), self.xPara[i], dx=1e-3)
 
     def inner_dc01_dx(self, i, t, j, kx, ky):
-        result = -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * dFp_dp(i, t) * phi_1d_jk(self.X(t), j, kx)
-
-        # X0 = 2 ** j * self.X(0) - kx
-        # X1 = 2 ** j * self.X(1) - kx
-        # mini = min(X0, X1)
-        # maxi = max(X0, X1)
-        # cnt = 0
-        # if mini < 0:
-        #     if maxi > 0:
-        #         cnt += 1
-        #     if maxi > 1:
-        #         cnt -= 1
-        # elif mini < 1:
-        #     if maxi > 1:
-        #         cnt -= 1
-        #
-        # if X0 > X1:
-        #     cnt = -cnt
-        # result += cnt * -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * self.Xp(t)
-
-        return result
+        return -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * dFp_dp(i, t) * phi_1d_jk(self.X(t), j, kx)
 
     def inner_dc10_dx(self, i, t, j, kx, ky):
         return 2 ** j * psi_1d_jk(self.X(t), j, kx) * dF_dp(i, t) * phi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
@@ -486,7 +476,31 @@ class VectorizeTest:
         if e == 0:
             return quad(lambda t: self.inner_dc00_dx(i, t), 0, 1)[0]
         elif e == 1:
-            return quad(lambda t: self.inner_dc01_dx(i, t, j, kx, ky), 0, 1)[0]
+            result = quad(lambda t: self.inner_dc01_dx(i, t, j, kx, ky), 0, 1)[0]
+
+            from util.solver import cubic
+
+            def helper(t):
+                if self.Xp(t) > 0:
+                    return cpsi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t)
+                else:
+                    return -cpsi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t)
+
+            a, b, c, d = cubicCoefficients(self.xPara)
+
+            # t0
+            roots = cubic(a, b, c, d - float(kx) / 2 ** j)
+            for root in roots:
+                if -1e-5 <= root <= 1 + 1e-5:
+                    result -= helper(root) * 2 ** j
+
+            # t1
+            roots = cubic(a, b, c, d - (1.0 + kx) / 2 ** j)
+            for root in roots:
+                if -1e-5 <= root <= 1 + 1e-5:
+                    result += helper(root) * 2 ** j
+
+            return result
         elif e == 2:
             return quad(lambda t: self.inner_dc10_dx(i, t, j, kx, ky), 0, 1)[0]
         else:
@@ -625,22 +639,24 @@ if __name__ == "__main__":
     xPara = [1, 4, 7, 7]
     yPara = [1, 1, 3, 7]
 
+    print VectorizeTest(xPara, yPara, diff).dc_dx(0, 1, 0, 0, 1)
+
     # grads, grads_core = VectorizeCubicBezier(xPara, yPara, diff).getGrads()
     # print grads_core
     # print grads
 
-    # v = VectorizeTest(xPara, yPara, diff)
-    # w = VectorizeCubicBezier(xPara, yPara, diff)
-    # for i in range(4):
-    #     for j in range(3):
-    #         for kx in range(2**j):
-    #             for ky in range(2**j):
-    #                 for e in range(1, 3):
-    #                     g1 = v.dc_dx(i, j, kx, ky, e)
-    #                     g2 = w.dc_dx(i, j, kx, ky, e)
-    #
-    #                     if abs(g1 - g2) > 1e-4:
-    #                         print g1, g2, (i, j, kx, ky, e)
+    v = VectorizeTest(xPara, yPara, diff)
+    w = VectorizeCubicBezier(xPara, yPara, diff)
+    for i in range(4):
+        for j in range(3):
+            for kx in range(2**j):
+                for ky in range(2**j):
+                    for e in range(1, 3):
+                        g1 = v.dc_dx(i, j, kx, ky, e)
+                        g2 = w.dc_dx(i, j, kx, ky, e)
+
+                        if abs(g1 - g2) > 1e-4:
+                            print g1, g2, (i, j, kx, ky, e)
 
     print
     print "VectorizeTest..."
