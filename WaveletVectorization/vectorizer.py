@@ -1,13 +1,10 @@
-import math
-import copy
+import math, copy, numpy as np
 from collections import namedtuple
-
-import numpy as np
-
 
 # -----------------------------------------------------------------------------
 Point = namedtuple('Point', 'x y')
 # -----------------------------------------------------------------------------
+
 
 class Rasterizer:
     def __init__(self, contour, w, h):
@@ -22,7 +19,7 @@ class Rasterizer:
         self.contour = copy.deepcopy(contour)
         self.contour.process(normalize)
         self.area = self.contour.area()
-        self.lattice = [Point(*normalize((x, y)))
+        self.lattice = [Point(*normalize((x, y))) \
                         for x in xrange(h) for y in xrange(w)]
         # prepare all c
         self.all_c = {}
@@ -42,7 +39,7 @@ class Rasterizer:
 
     def c(self, j, k):
         def transform(section, Q):
-            return (2 ** (j + 1) * p[i] - k[i] * 2 - Q[i]
+            return (2 ** (j + 1) * p[i] - k[i] * 2 - Q[i] \
                     for p in section for i in xrange(2))
 
         Q_00, Q_01 = Point(0, 0), Point(0, 1)
@@ -89,6 +86,7 @@ class Rasterizer:
         px_mat = [px_arr[i * self.w: (i + 1) * self.w] for i in xrange(self.h)]
         return px_mat
 
+
 # -----------------------------------------------------------------------------
 
 def addmul(A, B, mul=None):
@@ -117,7 +115,7 @@ class Vectorizer:
         for j in xrange(self.max_j + 1):
             for kx in xrange(2 ** j):
                 for ky in xrange(2 ** j):
-                    self.all_dc[(j, kx, ky)] = [self.dc_dX(j, Point(kx, ky), ei)
+                    self.all_dc[(j, kx, ky)] = [self.dc_dX(j, Point(kx, ky), ei) \
                                                 for ei in xrange(1, 4)]
 
     def psi(self, p, e, j, k):
@@ -149,24 +147,24 @@ class Vectorizer:
                 sec_grads = self.contour.get_grads(section, ei, k, j, q,
                                                    sign[ei][qi], left, right, bottom, top)
                 for i, idx in enumerate(indice):
-                    grads[idx * 2] += sec_grads[i * 2] / 8.0
-                    grads[idx * 2 + 1] += sec_grads[i * 2 + 1] / 8.0
+                    grads[idx * 2] += sec_grads[i * 2]
+                    grads[idx * 2 + 1] += sec_grads[i * 2 + 1]
+
+            sec_impulses = self.contour.get_impulses(section, ei, k, j)
+            for i, idx in enumerate(indice):
+                grads[idx * 2] += sec_impulses[i * 2]
+                grads[idx * 2 + 1] += sec_impulses[i * 2 + 1]
+
+        for i in range(self.num):
+            grads[i] /= float(self.wh)
+
         return grads
 
     def dLike_dX(self):
         E = [Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)]
-        # raster = Rasterizer(self.contour, self.w, self.h).get_fast()
-        # raster = np.asarray(raster)
-        diff = np.ndarray(shape=(8, 8), dtype=np.float64)
-        i = 0
-        for line in file("raster_diff.txt", "r"):
-            tokens = line.strip().split()
-            for j in range(8):
-                diff[i][j] = float(tokens[j])
-            i += 1
-
+        raster = Rasterizer(self.contour, self.w, self.h).get_fast()
+        raster = np.asarray(raster)
         grads = [0] * self.num
-        grads_sum = [0] * self.num
 
         for x, y in self.lattice:
             p = Point(x / float(self.wh), y / float(self.wh))
@@ -181,10 +179,9 @@ class Vectorizer:
                         dcs = self.all_dc[(j, kx, ky)]
                         for ei in xrange(1, 4):
                             addmul(grads_R, dcs[ei - 1], self.psi(p, E[ei], j, k))
-            addmul(grads_sum, grads_R)
-            addmul(grads, grads_R, 2 * diff[x, y])
-                   #2 * (float(raster[x, y]) - float(self.org_img[x, y])))
-        print grads_sum
+            addmul(grads, grads_R,
+                   2 * (float(raster[x, y]) - float(self.org_img[x, y])))
+
         return grads
 
     def like(self):
@@ -200,49 +197,40 @@ class Vectorizer:
 if __name__ == '__main__':
     from contour import *
 
-    def f(X, printLike=True):
-        contour = convertPathToContour(X)
-        like = Vectorizer(contour, raster).like()
-        if printLike:
-            print like
-        return like
-
-    def fPrime(X, eps=1e-4):
-        X = X.tolist()
-        grads = [0] * len(X)
-
-        for i in range(len(X)):
-            appPathLarge = X[:]
-            appPathLarge[i] += eps
-
-            appPathSmall = X[:]
-            appPathSmall[i] -= eps
-
-            grads[i] = (f(appPathLarge, False) - f(appPathSmall, False)) / (2 * eps)
-
-        return np.asarray(grads)
-
     oriPath = [1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3]
-    optPath = [1, 1, 4, 1, 7, 3, 7, 7, 3, 7, 1, 3]
+    optPath = [2, 1, 4, 1, 7, 3, 7, 7, 3, 7, 4, 3]
 
     def convertPathToContour(path):
-        pts = [(path[i], path[i + 1]) for i in xrange(0, len(path), 2)]
+        pts = [(path[i], path[i + 1]) for i in range(0, len(path), 2)]
         return CubicBezier.Contour(pts)
 
     # ts = time.time()
-    raster = Rasterizer(convertPathToContour(oriPath), 8, 8).get_fast()
-    raster = np.array(raster)
+    oriRaster = Rasterizer(convertPathToContour(oriPath), 8, 8).get_fast()
+    oriRaster = np.array(oriRaster)
     # print time.time() - ts, ' secs'
 
-    # ts = time.time()
-    contour = convertPathToContour(optPath)
-    grads = Vectorizer(contour, raster).dLike_dX()
-    print grads
-    # print time.time() - ts, ' secs'
+    def approx_dLike_dX(X, eps=1e-4):
+        grads = [0] * len(X)
 
-    print fPrime(np.asarray(optPath), 1e-4)
+        for i in range(len(X)):
+            pathLarge = X[:]
+            pathLarge[i] += eps
+            contourLarge = convertPathToContour(pathLarge)
 
-    #
-    # from scipy import optimize
-    # X0 = np.asarray(optPath)
-    # print optimize.fmin_cg(f, X0, fPrime)
+            pathSmall = X[:]
+            pathSmall[i] -= eps
+            contourSmall = convertPathToContour(pathSmall)
+
+            likeLarge = Vectorizer(contourLarge, oriRaster).like()
+            likeSmall = Vectorizer(contourSmall, oriRaster).like()
+
+            grads[i] = (likeLarge - likeSmall) / (2 * eps)
+
+        return grads
+
+    print "Analytical dLike_dX"
+    print Vectorizer(convertPathToContour(optPath), oriRaster).dLike_dX()
+
+    print
+    print "Approximate dLike_dX"
+    print approx_dLike_dX(optPath, 1e-4)

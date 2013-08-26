@@ -1,6 +1,6 @@
 import numpy as np
 from collections import namedtuple
-from WaveletVectorization.util.solver import cubic
+from util.solver import cubic
 
 # -----------------------------------------------------------------------------
 Point = namedtuple('Point', 'x y')
@@ -191,41 +191,41 @@ class CubicBezier:
         return ((3*self.x1)/2. - self.x0/2. - (3*self.x2)/2. + self.x3/2.)*t**6 + ((9*self.x0)/5. - (18*self.x1)/5. + (9*self.x2)/5.)*t**5 + ((9*self.x1)/4. - (9*self.x0)/4.)*t**4 + self.x0*t**3
      
     def partial_c00_x0(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_x0(t1) - self.F_c00_x0(t0))
+        return sign * (self.F_c00_x0(t1) - self.F_c00_x0(t0))
     def partial_c00_x1(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_x1(t1) - self.F_c00_x1(t0))
+        return sign * (self.F_c00_x1(t1) - self.F_c00_x1(t0))
     def partial_c00_x2(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_x2(t1) - self.F_c00_x2(t0))
+        return sign * (self.F_c00_x2(t1) - self.F_c00_x2(t0))
     def partial_c00_x3(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_x3(t1) - self.F_c00_x3(t0))
+        return sign * (self.F_c00_x3(t1) - self.F_c00_x3(t0))
     def partial_c00_y0(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_y0(t1) - self.F_c00_y0(t0))
+        return sign * (self.F_c00_y0(t1) - self.F_c00_y0(t0))
     def partial_c00_y1(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_y1(t1) - self.F_c00_y1(t0))
+        return sign * (self.F_c00_y1(t1) - self.F_c00_y1(t0))
     def partial_c00_y2(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_y2(t1) - self.F_c00_y2(t0))
+        return sign * (self.F_c00_y2(t1) - self.F_c00_y2(t0))
     def partial_c00_y3(self, k, j, t0, t1, q, sign):
-        return sign * 2**j * (self.F_c00_y3(t1) - self.F_c00_y3(t0))
+        return sign * (self.F_c00_y3(t1) - self.F_c00_y3(t0))
     def partial_c01_x0(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return -( 2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) +  (-k.y) * (self.L_c01_x0(t1) - self.L_c01_x0(t0)))
-        elif q.x == 0 and q.y == 1: return -(-2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) + (k.y+1) * (self.L_c01_x0(t1) - self.L_c01_x0(t0))) 
-        elif q.x == 1 and q.y == 0: return -( 2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) +  (-k.y) * (self.L_c01_x0(t1) - self.L_c01_x0(t0)))
-        else:                       return -(-2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) + (k.y+1) * (self.L_c01_x0(t1) - self.L_c01_x0(t0))) 
+        if   q.x == 0 and q.y == 0: return sign * (-2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) +   (k.y) * (self.L_c01_x0(t1) - self.L_c01_x0(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (-2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) + (k.y+1) * (self.L_c01_x0(t1) - self.L_c01_x0(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (-2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) +   (k.y) * (self.L_c01_x0(t1) - self.L_c01_x0(t0)))
+        else:                       return sign * (-2**j * (self.K_c01_x0(t1) - self.K_c01_x0(t0)) + (k.y+1) * (self.L_c01_x0(t1) - self.L_c01_x0(t0)))
     def partial_c01_x1(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return -( 2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) +  (-k.y) * (self.L_c01_x1(t1) - self.L_c01_x1(t0)))
-        elif q.x == 0 and q.y == 1: return -(-2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) + (k.y+1) * (self.L_c01_x1(t1) - self.L_c01_x1(t0))) 
-        elif q.x == 1 and q.y == 0: return -( 2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) +  (-k.y) * (self.L_c01_x1(t1) - self.L_c01_x1(t0)))
-        else:                       return -(-2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) + (k.y+1) * (self.L_c01_x1(t1) - self.L_c01_x1(t0))) 
+        if   q.x == 0 and q.y == 0: return sign * (-2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) +   (k.y) * (self.L_c01_x1(t1) - self.L_c01_x1(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (-2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) + (k.y+1) * (self.L_c01_x1(t1) - self.L_c01_x1(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (-2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) +   (k.y) * (self.L_c01_x1(t1) - self.L_c01_x1(t0)))
+        else:                       return sign * (-2**j * (self.K_c01_x1(t1) - self.K_c01_x1(t0)) + (k.y+1) * (self.L_c01_x1(t1) - self.L_c01_x1(t0)))
     def partial_c01_x2(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return -( 2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) +  (-k.y) * (self.L_c01_x2(t1) - self.L_c01_x2(t0)))
-        elif q.x == 0 and q.y == 1: return -(-2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) + (k.y+1) * (self.L_c01_x2(t1) - self.L_c01_x2(t0))) 
-        elif q.x == 1 and q.y == 0: return -( 2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) +  (-k.y) * (self.L_c01_x2(t1) - self.L_c01_x2(t0)))
-        else:                       return -(-2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) + (k.y+1) * (self.L_c01_x2(t1) - self.L_c01_x2(t0))) 
+        if   q.x == 0 and q.y == 0: return sign * (-2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) +   (k.y) * (self.L_c01_x2(t1) - self.L_c01_x2(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (-2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) + (k.y+1) * (self.L_c01_x2(t1) - self.L_c01_x2(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (-2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) +   (k.y) * (self.L_c01_x2(t1) - self.L_c01_x2(t0)))
+        else:                       return sign * (-2**j * (self.K_c01_x2(t1) - self.K_c01_x2(t0)) + (k.y+1) * (self.L_c01_x2(t1) - self.L_c01_x2(t0)))
     def partial_c01_x3(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return -( 2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) +  (-k.y) * (self.L_c01_x3(t1) - self.L_c01_x3(t0)))
-        elif q.x == 0 and q.y == 1: return -(-2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) + (k.y+1) * (self.L_c01_x3(t1) - self.L_c01_x3(t0))) 
-        elif q.x == 1 and q.y == 0: return -( 2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) +  (-k.y) * (self.L_c01_x3(t1) - self.L_c01_x3(t0)))
-        else:                       return -(-2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) + (k.y+1) * (self.L_c01_x3(t1) - self.L_c01_x3(t0))) 
+        if   q.x == 0 and q.y == 0: return sign * (-2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) +   (k.y) * (self.L_c01_x3(t1) - self.L_c01_x3(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (-2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) + (k.y+1) * (self.L_c01_x3(t1) - self.L_c01_x3(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (-2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) +   (k.y) * (self.L_c01_x3(t1) - self.L_c01_x3(t0)))
+        else:                       return sign * (-2**j * (self.K_c01_x3(t1) - self.K_c01_x3(t0)) + (k.y+1) * (self.L_c01_x3(t1) - self.L_c01_x3(t0)))
     def partial_c01_y0(self, k, j, t0, t1, q, sign):
         return -(sign * 2**j * (self.F_c01_y0(t1) - self.F_c01_y0(t0)))
     def partial_c01_y1(self, k, j, t0, t1, q, sign):
@@ -243,25 +243,25 @@ class CubicBezier:
     def partial_c10_x3(self, k, j, t0, t1, q, sign):
         return sign * 2**j * (self.F_c10_x3(t1) - self.F_c10_x3(t0))
     def partial_c10_y0(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return  2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) +  (-k.x) * (self.L_c10_y0(t1) - self.L_c10_y0(t0))
-        elif q.x == 0 and q.y == 1: return  2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) +  (-k.x) * (self.L_c10_y0(t1) - self.L_c10_y0(t0))
-        elif q.x == 1 and q.y == 0: return -2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) + (k.x+1) * (self.L_c10_y0(t1) - self.L_c10_y0(t0)) 
-        else:                       return -2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) + (k.x+1) * (self.L_c10_y0(t1) - self.L_c10_y0(t0)) 
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) -   (k.x) * (self.L_c10_y0(t1) - self.L_c10_y0(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) -   (k.x) * (self.L_c10_y0(t1) - self.L_c10_y0(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) - (k.x+1) * (self.L_c10_y0(t1) - self.L_c10_y0(t0)))
+        else:                       return sign * (2**j * (self.K_c10_y0(t1) - self.K_c10_y0(t0)) - (k.x+1) * (self.L_c10_y0(t1) - self.L_c10_y0(t0)))
     def partial_c10_y1(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return  2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) +  (-k.x) * (self.L_c10_y1(t1) - self.L_c10_y1(t0))
-        elif q.x == 0 and q.y == 1: return  2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) +  (-k.x) * (self.L_c10_y1(t1) - self.L_c10_y1(t0))
-        elif q.x == 1 and q.y == 0: return -2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) + (k.x+1) * (self.L_c10_y1(t1) - self.L_c10_y1(t0)) 
-        else:                       return -2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) + (k.x+1) * (self.L_c10_y1(t1) - self.L_c10_y1(t0)) 
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) -   (k.x) * (self.L_c10_y1(t1) - self.L_c10_y1(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) -   (k.x) * (self.L_c10_y1(t1) - self.L_c10_y1(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) - (k.x+1) * (self.L_c10_y1(t1) - self.L_c10_y1(t0)))
+        else:                       return sign * (2**j * (self.K_c10_y1(t1) - self.K_c10_y1(t0)) - (k.x+1) * (self.L_c10_y1(t1) - self.L_c10_y1(t0)))
     def partial_c10_y2(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return  2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) +  (-k.x) * (self.L_c10_y2(t1) - self.L_c10_y2(t0))
-        elif q.x == 0 and q.y == 1: return  2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) +  (-k.x) * (self.L_c10_y2(t1) - self.L_c10_y2(t0))
-        elif q.x == 1 and q.y == 0: return -2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) + (k.x+1) * (self.L_c10_y2(t1) - self.L_c10_y2(t0)) 
-        else:                       return -2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) + (k.x+1) * (self.L_c10_y2(t1) - self.L_c10_y2(t0)) 
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) -   (k.x) * (self.L_c10_y2(t1) - self.L_c10_y2(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) -   (k.x) * (self.L_c10_y2(t1) - self.L_c10_y2(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) - (k.x+1) * (self.L_c10_y2(t1) - self.L_c10_y2(t0)))
+        else:                       return sign * (2**j * (self.K_c10_y2(t1) - self.K_c10_y2(t0)) - (k.x+1) * (self.L_c10_y2(t1) - self.L_c10_y2(t0)))
     def partial_c10_y3(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return  2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) +  (-k.x) * (self.L_c10_y3(t1) - self.L_c10_y3(t0))
-        elif q.x == 0 and q.y == 1: return  2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) +  (-k.x) * (self.L_c10_y3(t1) - self.L_c10_y3(t0))
-        elif q.x == 1 and q.y == 0: return -2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) + (k.x+1) * (self.L_c10_y3(t1) - self.L_c10_y3(t0)) 
-        else:                       return -2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) + (k.x+1) * (self.L_c10_y3(t1) - self.L_c10_y3(t0)) 
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) -   (k.x) * (self.L_c10_y3(t1) - self.L_c10_y3(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) -   (k.x) * (self.L_c10_y3(t1) - self.L_c10_y3(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) - (k.x+1) * (self.L_c10_y3(t1) - self.L_c10_y3(t0)))
+        else:                       return sign * (2**j * (self.K_c10_y3(t1) - self.K_c10_y3(t0)) - (k.x+1) * (self.L_c10_y3(t1) - self.L_c10_y3(t0)))
     def partial_c11_x0(self, k, j, t0, t1, q, sign):
         return sign * 2**j * (self.F_c11_x0(t1) - self.F_c11_x0(t0))
     def partial_c11_x1(self, k, j, t0, t1, q, sign):
@@ -271,44 +271,254 @@ class CubicBezier:
     def partial_c11_x3(self, k, j, t0, t1, q, sign):
         return sign * 2**j * (self.F_c11_x3(t1) - self.F_c11_x3(t0))
     def partial_c11_y0(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return       2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) +  (-k.x) * (self.L_c11_y0(t1) - self.L_c11_y0(t0))
-        elif q.x == 0 and q.y == 1: return   - ( 2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) +  (-k.x) * (self.L_c11_y0(t1) - self.L_c11_y0(t0)))
-        elif q.x == 1 and q.y == 0: return   - ( 2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) + (k.x+1) * (self.L_c11_y0(t1) - self.L_c11_y0(t0)))
-        else:                       return       2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) + (k.x+1) * (self.L_c11_y0(t1) - self.L_c11_y0(t0))
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) -   (k.x) * (self.L_c11_y0(t1) - self.L_c11_y0(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) -   (k.x) * (self.L_c11_y0(t1) - self.L_c11_y0(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) - (k.x+1) * (self.L_c11_y0(t1) - self.L_c11_y0(t0)))
+        else:                       return sign * (2**j * (self.K_c11_y0(t1) - self.K_c11_y0(t0)) - (k.x+1) * (self.L_c11_y0(t1) - self.L_c11_y0(t0)))
     def partial_c11_y1(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return       2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) +  (-k.x) * (self.L_c11_y1(t1) - self.L_c11_y1(t0))
-        elif q.x == 0 and q.y == 1: return   - ( 2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) +  (-k.x) * (self.L_c11_y1(t1) - self.L_c11_y1(t0)))
-        elif q.x == 1 and q.y == 0: return   - ( 2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) + (k.x+1) * (self.L_c11_y1(t1) - self.L_c11_y1(t0)))
-        else:                       return       2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) + (k.x+1) * (self.L_c11_y1(t1) - self.L_c11_y1(t0))
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) -   (k.x) * (self.L_c11_y1(t1) - self.L_c11_y1(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) -   (k.x) * (self.L_c11_y1(t1) - self.L_c11_y1(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) - (k.x+1) * (self.L_c11_y1(t1) - self.L_c11_y1(t0)))
+        else:                       return sign * (2**j * (self.K_c11_y1(t1) - self.K_c11_y1(t0)) - (k.x+1) * (self.L_c11_y1(t1) - self.L_c11_y1(t0)))
     def partial_c11_y2(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return       2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) +  (-k.x) * (self.L_c11_y2(t1) - self.L_c11_y2(t0))
-        elif q.x == 0 and q.y == 1: return   - ( 2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) +  (-k.x) * (self.L_c11_y2(t1) - self.L_c11_y2(t0)))
-        elif q.x == 1 and q.y == 0: return   - ( 2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) + (k.x+1) * (self.L_c11_y2(t1) - self.L_c11_y2(t0)))
-        else:                       return       2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) + (k.x+1) * (self.L_c11_y2(t1) - self.L_c11_y2(t0))
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) -   (k.x) * (self.L_c11_y2(t1) - self.L_c11_y2(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) -   (k.x) * (self.L_c11_y2(t1) - self.L_c11_y2(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) - (k.x+1) * (self.L_c11_y2(t1) - self.L_c11_y2(t0)))
+        else:                       return sign * (2**j * (self.K_c11_y2(t1) - self.K_c11_y2(t0)) - (k.x+1) * (self.L_c11_y2(t1) - self.L_c11_y2(t0)))
     def partial_c11_y3(self, k, j, t0, t1, q, sign):
-        if   q.x == 0 and q.y == 0: return       2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) +  (-k.x) * (self.L_c11_y3(t1) - self.L_c11_y3(t0))
-        elif q.x == 0 and q.y == 1: return   - ( 2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) +  (-k.x) * (self.L_c11_y3(t1) - self.L_c11_y3(t0)))
-        elif q.x == 1 and q.y == 0: return   - ( 2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) + (k.x+1) * (self.L_c11_y3(t1) - self.L_c11_y3(t0)))
-        else:                       return       2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) + (k.x+1) * (self.L_c11_y3(t1) - self.L_c11_y3(t0))
+        if   q.x == 0 and q.y == 0: return sign * (2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) -   (k.x) * (self.L_c11_y3(t1) - self.L_c11_y3(t0)))
+        elif q.x == 0 and q.y == 1: return sign * (2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) -   (k.x) * (self.L_c11_y3(t1) - self.L_c11_y3(t0)))
+        elif q.x == 1 and q.y == 0: return sign * (2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) - (k.x+1) * (self.L_c11_y3(t1) - self.L_c11_y3(t0)))
+        else:                       return sign * (2**j * (self.K_c11_y3(t1) - self.K_c11_y3(t0)) - (k.x+1) * (self.L_c11_y3(t1) - self.L_c11_y3(t0)))
 
-    def get_grads(self, section, ei, k,j,q,sign, left, right, bottom, top):
+    @staticmethod
+    def cpsi_1d(x):
+        if x < 0:
+            return 0.0
+        elif 0 <= x < 0.5:
+            return float(x)
+        elif 0.5 <= x < 1:
+            return 1 - float(x)
+        else:
+            return 0.0
+
+    @staticmethod
+    def cpsi_1d_jk(x, j, k):
+        return 2 ** (-j) * CubicBezier.cpsi_1d(2 ** j * x - k)
+
+    @staticmethod
+    def dF_dp(i, t):
+        if i == 0:
+            return (1.0 - t) ** 3
+        elif i == 1:
+            return 3.0 * (1.0 - t) ** 2 * t
+        elif i == 2:
+            return 3.0 * (1.0 - t) * t ** 2
+        else:
+            return t ** 3
+
+    @staticmethod
+    def F(t, para):
+        result = 0
+
+        for i in range(4):
+            result += CubicBezier.dF_dp(i, t) * para[i]
+
+        return result
+
+    @staticmethod
+    def dFp_dp(i, t):
+        if i == 0:
+            return -3.0 * (1.0 - t) ** 2
+        elif i == 1:
+            return 3.0 * (-2.0 * (1.0 - t) * t + (1.0 - t) ** 2)
+        elif i == 2:
+            return 3.0 * (-t ** 2 + (1.0 - t) * 2 * t)
+        else:
+            return 3.0 * t ** 2
+
+    @staticmethod
+    def Fp(t, para):
+        result = 0
+
+        for i in range(4):
+            result += CubicBezier.dFp_dp(i, t) * para[i]
+
+        return result
+
+    @staticmethod
+    def cubicCoefficients(p0, p1, p2, p3):
+        a = -p0 + 3.0 * p1 - 3.0 * p2 + p3
+        b = 3.0 * p0 - 6.0 * p1 + 3.0 * p2
+        c = -3.0 * p0 + 3.0 * p1
+        d = p0
+
+        return a, b, c, d
+
+    def X(self, t):
+        return CubicBezier.F(t, [self.x0, self.x1, self.x2, self.x3])
+
+    def Xp(self, t):
+        return CubicBezier.Fp(t, [self.x0, self.x1, self.x2, self.x3])
+
+    def Y(self, t):
+        return CubicBezier.F(t, [self.y0, self.y1, self.y2, self.y3])
+
+    def Yp(self, t):
+        return CubicBezier.Fp(t, [self.y0, self.y1, self.y2, self.y3])
+
+    def impulse01_x(self, i, j, k):
+        eps = 1e-8
+        kx, ky = k
+
+        def helper(t):
+            if self.Xp(t) >= -eps:  # >= 0
+                return CubicBezier.cpsi_1d_jk(self.Y(t), j, ky) * CubicBezier.dF_dp(i, t)
+            else:  # < 0
+                return -CubicBezier.cpsi_1d_jk(self.Y(t), j, ky) * CubicBezier.dF_dp(i, t)
+
+        result = 0
+        a, b, c, d = CubicBezier.cubicCoefficients(self.x0, self.x1, self.x2, self.x3)
+
+        # t0
+        roots = cubic(a, b, c, d - float(kx) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (1.0 + kx) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        return result
+
+    def impulse00_y(self, i):
+        eps = 1e-8
+
+        def helper(t):
+            if self.Yp(t) >= -eps:  # >= 0
+                return CubicBezier.cpsi_1d(self.X(t)) * CubicBezier.dF_dp(i, t)
+            else:  # < 0
+                return -CubicBezier.cpsi_1d(self.X(t)) * CubicBezier.dF_dp(i, t)
+
+        result = 0
+        a, b, c, d = CubicBezier.cubicCoefficients(self.y0, self.y1, self.y2, self.y3)
+
+        # t0
+        roots = cubic(a, b, c, d)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root)
+
+        # t1
+        roots = cubic(a, b, c, d - 1.0)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root)
+
+        return result
+
+    def impulse10_y(self, i, j, k):
+        eps = 1e-8
+        kx, ky = k
+
+        def helper(t):
+            if self.Yp(t) >= -eps:  # >= 0
+                return CubicBezier.cpsi_1d_jk(self.X(t), j, kx) * CubicBezier.dF_dp(i, t)
+            else:  # < 0
+                return -CubicBezier.cpsi_1d_jk(self.X(t), j, kx) * CubicBezier.dF_dp(i, t)
+
+        result = 0
+        a, b, c, d = CubicBezier.cubicCoefficients(self.y0, self.y1, self.y2, self.y3)
+
+        # t0
+        roots = cubic(a, b, c, d - float(ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (1.0 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** j
+
+        return result
+
+    def impulse11_y(self, i, j, k):
+        eps = 1e-8
+        kx, ky = k
+
+        def helper(t):
+            if self.Yp(t) >= -eps:  # >= 0
+                return CubicBezier.cpsi_1d_jk(self.X(t), j, kx) * CubicBezier.dF_dp(i, t)
+            else:  # < 0
+                return -CubicBezier.cpsi_1d_jk(self.X(t), j, kx) * CubicBezier.dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = CubicBezier.cubicCoefficients(self.y0, self.y1, self.y2, self.y3)
+
+        # t0
+        roots = cubic(a, b, c, d - float(ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (0.5 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** (j + 1)
+
+        # t2
+        roots = cubic(a, b, c, d - (1.0 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        return result
+
+    def get_grads(self, section, ei, k, j, q, sign, left, right, bottom, top):
         partial_matrix = (
-           (self.partial_c00_x0,  self.partial_c01_x0,  self.partial_c10_x0,  self.partial_c11_x0   ),
-           (self.partial_c00_y0,  self.partial_c01_y0,  self.partial_c10_y0,  self.partial_c11_y0   ),
-           (self.partial_c00_x1,  self.partial_c01_x1,  self.partial_c10_x1,  self.partial_c11_x1   ),
-           (self.partial_c00_y1,  self.partial_c01_y1,  self.partial_c10_y1,  self.partial_c11_y1   ),
-           (self.partial_c00_x2,  self.partial_c01_x2,  self.partial_c10_x2,  self.partial_c11_x2   ),
-           (self.partial_c00_y2,  self.partial_c01_y2,  self.partial_c10_y2,  self.partial_c11_y2   ),
-           (self.partial_c00_x3,  self.partial_c01_x3,  self.partial_c10_x3,  self.partial_c11_x3   ),
-           (self.partial_c00_y3,  self.partial_c01_y3,  self.partial_c10_y3,  self.partial_c11_y3   )
+            (self.partial_c00_x0,  self.partial_c01_x0,  self.partial_c10_x0,  self.partial_c11_x0),
+            (self.partial_c00_y0,  self.partial_c01_y0,  self.partial_c10_y0,  self.partial_c11_y0),
+            (self.partial_c00_x1,  self.partial_c01_x1,  self.partial_c10_x1,  self.partial_c11_x1),
+            (self.partial_c00_y1,  self.partial_c01_y1,  self.partial_c10_y1,  self.partial_c11_y1),
+            (self.partial_c00_x2,  self.partial_c01_x2,  self.partial_c10_x2,  self.partial_c11_x2),
+            (self.partial_c00_y2,  self.partial_c01_y2,  self.partial_c10_y2,  self.partial_c11_y2),
+            (self.partial_c00_x3,  self.partial_c01_x3,  self.partial_c10_x3,  self.partial_c11_x3),
+            (self.partial_c00_y3,  self.partial_c01_y3,  self.partial_c10_y3,  self.partial_c11_y3)
         )
         grads = [0] * 8
+
         for t0, t1 in self.clip(left, right, bottom, top, True):
             for i in xrange(8):
                 method = partial_matrix[i][ei]
                 if method is not None:
                     grads[i] += method(k, j, t0, t1, q, sign)
+
         return grads
+
+    def get_impulses(self, section, ei, k, j):
+        impulses = [0.0] * 8
+
+        if ei == 0:
+            for i in range(1, 8, 2):
+                impulses[i] += self.impulse00_y(i / 2)
+        elif ei == 1:
+            for i in range(0, 8, 2):
+                impulses[i] += self.impulse01_x(i / 2, j, k)
+        elif ei == 2:
+            for i in range(1, 8, 2):
+                impulses[i] += self.impulse10_y(i / 2, j, k)
+        else:
+            for i in range(1, 8, 2):
+                impulses[i] += self.impulse11_y(i / 2, j, k)
+
+        return impulses
 
     def fK_c10(self, t):
         return ((self.x0*self.y0)/2. - (3*self.x0*self.y1)/2. - (3*self.x1*self.y0)/2. + (3*self.x0*self.y2)/2. + (9*self.x1*self.y1)/2. + (3*self.x2*self.y0)/2. - (self.x0*self.y3)/2. - (9*self.x1*self.y2)/2. - (9*self.x2*self.y1)/2. - (self.x3*self.y0)/2. + (3*self.x1*self.y3)/2. + (9*self.x2*self.y2)/2. + (3*self.x3*self.y1)/2. - (3*self.x2*self.y3)/2. - (3*self.x3*self.y2)/2. + (self.x3*self.y3)/2.)*t**6 + ((39*self.x0*self.y1)/5. - 3*self.x0*self.y0 + (36*self.x1*self.y0)/5. - (33*self.x0*self.y2)/5. - 18*self.x1*self.y1 - (27*self.x2*self.y0)/5. + (9*self.x0*self.y3)/5. + (72*self.x1*self.y2)/5. + (63*self.x2*self.y1)/5. + (6*self.x3*self.y0)/5. - (18*self.x1*self.y3)/5. - 9*self.x2*self.y2 - (12*self.x3*self.y1)/5. + (9*self.x2*self.y3)/5. + (6*self.x3*self.y2)/5.)*t**5 + ((15*self.x0*self.y0)/2. - (33*self.x0*self.y1)/2. - (27*self.x1*self.y0)/2. + (45*self.x0*self.y2)/4. + 27*self.x1*self.y1 + (27*self.x2*self.y0)/4. - (9*self.x0*self.y3)/4. - (63*self.x1*self.y2)/4. - (45*self.x2*self.y1)/4. - (3*self.x3*self.y0)/4. + (9*self.x1*self.y3)/4. + (9*self.x2*self.y2)/2. + (3*self.x3*self.y1)/4.)*t**4 + (18*self.x0*self.y1 - 10*self.x0*self.y0 + 12*self.x1*self.y0 - 9*self.x0*self.y2 - 18*self.x1*self.y1 - 3*self.x2*self.y0 + self.x0*self.y3 + 6*self.x1*self.y2 + 3*self.x2*self.y1)*t**3 + ((15*self.x0*self.y0)/2. - (21*self.x0*self.y1)/2. - (9*self.x1*self.y0)/2. + 3*self.x0*self.y2 + (9*self.x1*self.y1)/2.)*t**2 + (3*self.x0*self.y1 - 3*self.x0*self.y0)*t
@@ -406,11 +616,16 @@ class Contour:
             v0 = self.contour[i-3]
             yield (v0, v1, v2, v3), (i-3, i-2, i-1, i)
 
-    def get_grads(self, section, ei, k,j,q,sign, left, right, bottom, top):
+    def get_grads(self, section, ei, k, j, q, sign, left, right, bottom, top):
         bezier = CubicBezier(*section)
-        return bezier.get_grads(section, ei, k,j,q,sign, left, right, bottom, top)
-    def get_f(self, section, k,j,q, left, right, bottom, top):
+        return bezier.get_grads(section, ei, k, j, q, sign, left, right, bottom, top)
+
+    def get_impulses(self, section, ei, k, j):
         bezier = CubicBezier(*section)
-        return bezier.get_f(section, k,j,q, left, right, bottom, top)
+        return bezier.get_impulses(section, ei, k, j)
+
+    def get_f(self, section, k, j, q, left, right, bottom, top):
+        bezier = CubicBezier(*section)
+        return bezier.get_f(section, k, j, q, left, right, bottom, top)
 
 # -----------------------------------------------------------------------------
