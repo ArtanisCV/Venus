@@ -1,7 +1,7 @@
 import math
 import numpy
 from scipy.integrate import quad
-from scipy.misc import derivative
+from util.solver import cubic
 
 __author__ = 'Artanis'
 
@@ -232,11 +232,36 @@ class VectorizeCubicBezier:
     def inner_dc11_dx(self, i, t, j, kx, ky):
         return 2 ** j * psi_1d_jk(self.X(t), j, kx) * dF_dp(i, t) * psi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
 
+    def impulse01_x(self, i, j, kx, ky):
+        def helper(t):
+            if self.Xp(t) > 0:
+                return cpsi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t)
+            else:
+                return -cpsi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.xPara)
+
+        # t0
+        roots = cubic(a, b, c, d - float(kx) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (1.0 + kx) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        return result
+
     def dc_dx(self, i, j, kx, ky, e):
         if e == 0:
             return quad(lambda t: self.inner_dc00_dx(i, t), 0, 1)[0]
         elif e == 1:
-            return quad(lambda t: self.inner_dc01_dx(i, t, j, kx, ky), 0, 1)[0]
+            return quad(lambda t: self.inner_dc01_dx(i, t, j, kx, ky), 0, 1)[0] + self.impulse01_x(i, j, kx, ky)
         elif e == 2:
             return quad(lambda t: self.inner_dc10_dx(i, t, j, kx, ky), 0, 1)[0]
         else:
@@ -254,15 +279,96 @@ class VectorizeCubicBezier:
     def inner_dc11_dy(self, i, t, j, kx, ky):
         return 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * dFp_dp(i, t) * psi_1d_jk(self.Y(t), j, ky)
 
+    def impulse00_y(self, i):
+        def helper(t):
+            if self.Yp(t) > 0:
+                return cpsi_1d(self.X(t)) * dF_dp(i, t)
+            else:
+                return -cpsi_1d(self.X(t)) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.yPara)
+
+        # t0
+        roots = cubic(a, b, c, d)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root)
+
+        # t1
+        roots = cubic(a, b, c, d - 1.0)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root)
+
+        return result
+
+    def impulse10_y(self, i, j, kx, ky):
+        def helper(t):
+            if self.Yp(t) > 0:
+                return cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+            else:
+                return -cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.yPara)
+
+        # t0
+        roots = cubic(a, b, c, d - float(ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (1.0 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** j
+
+        return result
+
+    def impulse11_y(self, i, j, kx, ky):
+        def helper(t):
+            if self.Yp(t) > 0:
+                return cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+            else:
+                return -cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.yPara)
+
+        # t0
+        roots = cubic(a, b, c, d - float(ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (0.5 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** (j + 1)
+
+        # t2
+        roots = cubic(a, b, c, d - (1.0 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        return result
+
     def dc_dy(self, i, j, kx, ky, e):
         if e == 0:
-            return quad(lambda t: self.inner_dc00_dy(i, t), 0, 1)[0]
+            return quad(lambda t: self.inner_dc00_dy(i, t), 0, 1)[0] + self.impulse00_y(i)
         elif e == 1:
             return quad(lambda t: self.inner_dc01_dy(i, t, j, kx, ky), 0, 1)[0]
         elif e == 2:
-            return quad(lambda t: self.inner_dc10_dy(i, t, j, kx, ky), 0, 1)[0]
+            return quad(lambda t: self.inner_dc10_dy(i, t, j, kx, ky), 0, 1)[0] + self.impulse10_y(i, j, kx, ky)
         else:
-            return quad(lambda t: self.inner_dc11_dy(i, t, j, kx, ky), 0, 1)[0]
+            return quad(lambda t: self.inner_dc11_dy(i, t, j, kx, ky), 0, 1)[0] + self.impulse11_y(i, j, kx, ky)
 
     def getGrads(self):
         grads = [0.0] * 8
@@ -316,111 +422,10 @@ class VectorizeCubicBezier:
         return grads, grads_core
 
 
-# class VectorizeTest:
-#     def __init__(self, xPara, yPara, diff):
-#         self.xPara = [para / float(imgShape[0]) for para in xPara]
-#         self.yPara = [para / float(imgShape[1]) for para in yPara]
-#
-#         self.rows = diff.shape[0]
-#         self.cols = diff.shape[1]
-#         self.diff = diff
-#
-#         self.MAX_J = int(math.ceil(math.log(min(self.rows, self.cols), 2))) - 1
-#         self.MAX_K = 2 ** self.MAX_J - 1
-#
-#         self.Y = lambda t: F(t, self.yPara)
-#         self.Yp = lambda t: Fp(t, self.yPara)
-#
-#     def Xi(self, i, xi, t):
-#         result = 0
-#
-#         for k in range(4):
-#             if k != i:
-#                 result += dF_dp(k, t) * self.xPara[k]
-#             else:
-#                 result += dF_dp(k, t) * xi
-#
-#         return result
-#
-#     def Xpi(self, i, xi, t):
-#         result = 0
-#
-#         for k in range(4):
-#             if k != i:
-#                 result += dFp_dp(k, t) * self.xPara[k]
-#             else:
-#                 result += dFp_dp(k, t) * xi
-#
-#         return result
-#
-#     def inner_c00_jk_x(self, i, xi, t):
-#         return cphi_1d(self.Xi(i, xi, t)) * phi_1d(self.Y(t)) * self.Yp(t)
-#
-#     def inner_c01_jk_x(self, i, xi, t, j, kx, ky):
-#         return -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * phi_1d_jk(self.Xi(i, xi, t), j, kx) * self.Xpi(i, xi, t)
-#
-#     def inner_c10_jk_x(self, i, xi, t, j, kx, ky):
-#         return 2 ** j * cpsi_1d_jk(self.Xi(i, xi, t), j, kx) * phi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
-#
-#     def inner_c11_jk_x(self, i, xi, t, j, kx, ky):
-#         return 2 ** j * cpsi_1d_jk(self.Xi(i, xi, t), j, kx) * psi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
-#
-#     def c00_jk_x(self, i, xi):
-#         return quad(lambda t: self.inner_c00_jk_x(i, xi, t), 0, 1)[0]
-#
-#     def c01_jk_x(self, i, xi, j, kx, ky):
-#         return quad(lambda t: self.inner_c01_jk_x(i, xi, t, j, kx, ky), 0, 1)[0]
-#
-#     def c10_jk_x(self, i, xi, j, kx, ky):
-#         return quad(lambda t: self.inner_c10_jk_x(i, xi, t, j, kx, ky), 0, 1)[0]
-#
-#     def c11_jk_x(self, i, xi, j, kx, ky):
-#         return quad(lambda t: self.inner_c11_jk_x(i, xi, t, j, kx, ky), 0, 1)[0]
-#
-#     def dc_dx(self, i, j, kx, ky, e):
-#         if e == 0:
-#             return derivative(lambda xi: self.c00_jk_x(i, xi), self.xPara[i], dx=1e-4)
-#         elif e == 1:
-#             return derivative(lambda xi: self.c01_jk_x(i, xi, j, kx, ky), self.xPara[i], dx=1e-4)
-#         elif e == 2:
-#             return derivative(lambda xi: self.c10_jk_x(i, xi, j, kx, ky), self.xPara[i], dx=1e-4)
-#         else:
-#             return derivative(lambda xi: self.c11_jk_x(i, xi, j, kx, ky), self.xPara[i], dx=1e-4)
-#
-#     def getGrads(self):
-#         grads = [0.0] * 8
-#         grads_core = [0.0] * 8
-#
-#         for i in range(4):
-#             dc_dx_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
-#                                     dtype=numpy.float64)
-#             for j in range(self.MAX_J + 1):
-#                 for kx in range(2 ** j):
-#                     for ky in range(2 ** j):
-#                         for e in range(MAX_E + 1):
-#                             dc_dx_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e) / float(self.rows)
-#
-#             for x in range(self.rows):
-#                 for y in range(self.cols):
-#                     p = (x / float(self.rows), y / float(self.cols))
-#                     g_x = dc_dx_mat[0][0][0][0] * psi_2d_jke(p[0], p[1], 0, 0, 0, 0)
-#
-#                     for j in range(self.MAX_J + 1):
-#                         for kx in range(2 ** j):
-#                             for ky in range(2 ** j):
-#                                 for e in range(1, MAX_E + 1):
-#                                     g_x += dc_dx_mat[j][kx][ky][e] * psi_2d_jke(p[0], p[1], j, kx, ky, e)
-#
-#                     grads[i * 2] += g_x * self.diff[x][y] * 2.0
-#                     grads_core[i * 2] += g_x
-#
-#         return grads, grads_core
-
-
 class VectorizeTest:
     def __init__(self, xPara, yPara, diff):
-        self.xPara = [para / float(imgShape[0]) for para in xPara]
-        self.yPara = [para / float(imgShape[1]) for para in yPara]
+        self.xPara = [para / float(diff.shape[0]) for para in xPara]
+        self.yPara = [para / float(diff.shape[0]) for para in yPara]
 
         self.rows = diff.shape[0]
         self.cols = diff.shape[1]
@@ -434,104 +439,177 @@ class VectorizeTest:
         self.Xp = lambda t: Fp(t, self.xPara)
         self.Yp = lambda t: Fp(t, self.yPara)
 
-    def Xi(self, i, xi, t):
+    def Yi(self, i, yi, t):
         result = 0
 
         for k in range(4):
             if k != i:
-                result += dF_dp(k, t) * self.xPara[k]
+                result += dF_dp(k, t) * self.yPara[k]
             else:
-                result += dF_dp(k, t) * xi
+                result += dF_dp(k, t) * yi
 
         return result
 
-    def Xpi(self, i, xi, t):
+    def Ypi(self, i, yi, t):
         result = 0
 
         for k in range(4):
             if k != i:
-                result += dFp_dp(k, t) * self.xPara[k]
+                result += dFp_dp(k, t) * self.yPara[k]
             else:
-                result += dFp_dp(k, t) * xi
+                result += dFp_dp(k, t) * yi
 
         return result
 
-    def inner_dc00_dx(self, i, t):
-        return phi_1d(self.X(t)) * phi_1d(self.Y(t)) * dF_dp(i, t) * self.Yp(t)
+    def inner_c00(self, i, yi):
+        return quad(lambda t: cphi_1d(self.X(t)) * phi_1d(self.Yi(i, yi, t)) * self.Ypi(i, yi, t), 0, 1)[0]
 
-    # def inner_dc01_dx(self, i, t, j, kx, ky):
-    #     return -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * \
-    #         derivative(lambda xi: phi_1d_jk(self.Xi(i, xi, t), j, kx) * self.Xpi(i, xi, t), self.xPara[i], dx=1e-3)
+    def inner_c01(self, i, yi, j, kx, ky):
+        return quad(lambda t: -(2 ** j) * cpsi_1d_jk(self.Yi(i, yi, t), j, ky) *
+                    phi_1d_jk(self.X(t), j, kx) * self.Xp(t), 0, 1)[0]
 
-    def inner_dc01_dx(self, i, t, j, kx, ky):
-        return -(2 ** j) * cpsi_1d_jk(self.Y(t), j, ky) * dFp_dp(i, t) * phi_1d_jk(self.X(t), j, kx)
+    def inner_c10(self, i, yi, j, kx, ky):
+        return quad(lambda t: 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * self.Ypi(i, yi, t) *
+                    phi_1d_jk(self.Yi(i, yi, t), j, ky), 0, 1)[0]
 
-    def inner_dc10_dx(self, i, t, j, kx, ky):
-        return 2 ** j * psi_1d_jk(self.X(t), j, kx) * dF_dp(i, t) * phi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
+    def inner_c11(self, i, yi, j, kx, ky):
+        return quad(lambda t: 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * self.Ypi(i, yi, t) *
+                    psi_1d_jk(self.Yi(i, yi, t), j, ky), 0, 1)[0]
 
-    def inner_dc11_dx(self, i, t, j, kx, ky):
-        return 2 ** j * psi_1d_jk(self.X(t), j, kx) * dF_dp(i, t) * psi_1d_jk(self.Y(t), j, ky) * self.Yp(t)
+    def inner_dc00_dy(self, i, t):
+        return cphi_1d(self.X(t)) * phi_1d(self.Y(t)) * dFp_dp(i, t)
 
-    def dc_dx(self, i, j, kx, ky, e):
+    def inner_dc01_dy(self, i, t, j, kx, ky):
+        return -(2 ** j) * psi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t) * phi_1d_jk(self.X(t), j, kx) * self.Xp(t)
+
+    def inner_dc10_dy(self, i, t, j, kx, ky):
+        return 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * dFp_dp(i, t) * phi_1d_jk(self.Y(t), j, ky)
+
+    def inner_dc11_dy(self, i, t, j, kx, ky):
+        return 2 ** j * cpsi_1d_jk(self.X(t), j, kx) * dFp_dp(i, t) * psi_1d_jk(self.Y(t), j, ky)
+
+    def impulse00_y(self, i):
+        def helper(t):
+            if self.Yp(t) > -1e-8:  # >= 0
+                return cpsi_1d(self.X(t)) * dF_dp(i, t)
+            else:  # < 0
+                return -cpsi_1d(self.X(t)) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.yPara)
+
+        # t0
+        roots = cubic(a, b, c, d)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root)
+
+        # t1
+        roots = cubic(a, b, c, d - 1.0)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root)
+
+        return result
+
+    def impulse10_y(self, i, j, kx, ky):
+        def helper(t):
+            if self.Yp(t) > -1e-8:  # >= 0
+                return cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+            else:  # < 0
+                return -cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.yPara)
+
+        # t0
+        roots = cubic(a, b, c, d - float(ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (1.0 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** j
+
+        return result
+
+    def impulse11_y(self, i, j, kx, ky):
+        def helper(t):
+            if self.Yp(t) > -1e-8:  # >= 0
+                return cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+            else:  # < 0
+                return -cpsi_1d_jk(self.X(t), j, kx) * dF_dp(i, t)
+
+        result = 0
+        eps = 1e-8
+        a, b, c, d = cubicCoefficients(self.yPara)
+
+        # t0
+        roots = cubic(a, b, c, d - float(ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        # t1
+        roots = cubic(a, b, c, d - (0.5 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result -= helper(root) * 2 ** (j + 1)
+
+        # t2
+        roots = cubic(a, b, c, d - (1.0 + ky) / 2 ** j)
+        for root in roots:
+            if -eps <= root <= 1 + eps:
+                result += helper(root) * 2 ** j
+
+        return result
+
+    def dc_dy(self, i, j, kx, ky, e):
+        from scipy.misc import derivative
         if e == 0:
-            return quad(lambda t: self.inner_dc00_dx(i, t), 0, 1)[0]
+            #return derivative(lambda yi: self.inner_c00(i, yi), self.yPara[i], dx=1e-5)
+            return quad(lambda t: self.inner_dc00_dy(i, t), 0, 1)[0] + self.impulse00_y(i)
         elif e == 1:
-            result = quad(lambda t: self.inner_dc01_dx(i, t, j, kx, ky), 0, 1)[0]
-
-            from util.solver import cubic
-
-            def helper(t):
-                if self.Xp(t) > 0:
-                    return cpsi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t)
-                else:
-                    return -cpsi_1d_jk(self.Y(t), j, ky) * dF_dp(i, t)
-
-            a, b, c, d = cubicCoefficients(self.xPara)
-
-            # t0
-            roots = cubic(a, b, c, d - float(kx) / 2 ** j)
-            for root in roots:
-                if -1e-5 <= root <= 1 + 1e-5:
-                    result -= helper(root) * 2 ** j
-
-            # t1
-            roots = cubic(a, b, c, d - (1.0 + kx) / 2 ** j)
-            for root in roots:
-                if -1e-5 <= root <= 1 + 1e-5:
-                    result += helper(root) * 2 ** j
-
-            return result
+            #return derivative(lambda yi: self.inner_c01(i, yi, j, kx, ky), self.yPara[i], dx=1e-5)
+            return quad(lambda t: self.inner_dc01_dy(i, t, j, kx, ky), 0, 1)[0]
         elif e == 2:
-            return quad(lambda t: self.inner_dc10_dx(i, t, j, kx, ky), 0, 1)[0]
+            #return derivative(lambda yi: self.inner_c10(i, yi, j, kx, ky), self.yPara[i], dx=1e-5)
+            return quad(lambda t: self.inner_dc10_dy(i, t, j, kx, ky), 0, 1)[0] + self.impulse10_y(i, j, kx, ky)
         else:
-            return quad(lambda t: self.inner_dc11_dx(i, t, j, kx, ky), 0, 1)[0]
+            #return derivative(lambda yi: self.inner_c11(i, yi, j, kx, ky), self.yPara[i], dx=1e-5)
+            return quad(lambda t: self.inner_dc11_dy(i, t, j, kx, ky), 0, 1)[0] + self.impulse11_y(i, j, kx, ky)
 
     def getGrads(self):
         grads = [0.0] * 8
         grads_core = [0.0] * 8
 
         for i in range(4):
-            dc_dx_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
-                                    dtype=numpy.float64)
+            dc_dyi_mat = numpy.zeros(shape=(self.MAX_J + 1, self.MAX_K + 1, self.MAX_K + 1, MAX_E + 1),
+                                     dtype=numpy.float64)
             for j in range(self.MAX_J + 1):
                 for kx in range(2 ** j):
                     for ky in range(2 ** j):
                         for e in range(MAX_E + 1):
-                            dc_dx_mat[j][kx][ky][e] = self.dc_dx(i, j, kx, ky, e) / float(self.rows)
+                            dc_dyi_mat[j][kx][ky][e] = self.dc_dy(i, j, kx, ky, e) / float(self.cols)  # normalize
 
             for x in range(self.rows):
                 for y in range(self.cols):
                     p = (x / float(self.rows), y / float(self.cols))
-                    g_x = dc_dx_mat[0][0][0][0] * psi_2d_jke(p[0], p[1], 0, 0, 0, 0)
+                    g_yi = dc_dyi_mat[0][0][0][0] * psi_2d_jke(p[0], p[1], 0, 0, 0, 0)
 
                     for j in range(self.MAX_J + 1):
                         for kx in range(2 ** j):
                             for ky in range(2 ** j):
                                 for e in range(1, MAX_E + 1):
-                                    g_x += dc_dx_mat[j][kx][ky][e] * psi_2d_jke(p[0], p[1], j, kx, ky, e)
+                                    g_yi += dc_dyi_mat[j][kx][ky][e] * psi_2d_jke(p[0], p[1], j, kx, ky, e)
 
-                    grads[i * 2] += g_x * self.diff[x][y] * 2.0
-                    grads_core[i * 2] += g_x
+                    grads[i * 2 + 1] += g_yi * self.diff[x][y] * 2.0
+                    grads_core[i * 2 + 1] += g_yi
 
         return grads, grads_core
 
@@ -614,6 +692,8 @@ def approx_dLike(contour, oriImg, eps=1e-4):
 if __name__ == "__main__":
     oriPath = [1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3]
     optPath = [1, 1, 4, 1, 7, 3, 7, 7, 3, 7, 1, 3]
+    # oriPath = [1, 1, 1, 3, 3, 7, 7, 7, 7, 3, 3, 1]
+    # optPath = [1, 1, 1, 4, 3, 7, 7, 7, 7, 3, 3, 1]
 
     import numpy
 
@@ -638,29 +718,10 @@ if __name__ == "__main__":
 
     xPara = [1, 4, 7, 7]
     yPara = [1, 1, 3, 7]
+    # xPara = [1, 1, 3, 7]
+    # yPara = [1, 4, 7, 7]
 
-    print VectorizeTest(xPara, yPara, diff).dc_dx(0, 1, 0, 0, 1)
-
-    # grads, grads_core = VectorizeCubicBezier(xPara, yPara, diff).getGrads()
-    # print grads_core
-    # print grads
-
-    v = VectorizeTest(xPara, yPara, diff)
-    w = VectorizeCubicBezier(xPara, yPara, diff)
-    for i in range(4):
-        for j in range(3):
-            for kx in range(2**j):
-                for ky in range(2**j):
-                    for e in range(1, 3):
-                        g1 = v.dc_dx(i, j, kx, ky, e)
-                        g2 = w.dc_dx(i, j, kx, ky, e)
-
-                        if abs(g1 - g2) > 1e-4:
-                            print g1, g2, (i, j, kx, ky, e)
-
-    print
-    print "VectorizeTest..."
-    grads, grads_core = VectorizeTest(xPara, yPara, diff).getGrads()
+    grads, grads_core = VectorizeCubicBezier(xPara, yPara, diff).getGrads()
     print grads_core
     print grads
 
