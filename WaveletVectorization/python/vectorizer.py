@@ -206,6 +206,11 @@ if __name__ == '__main__':
 
     # ts = time.time()
     oriRaster = Rasterizer(convertPathToContour(oriPath), 8, 8).get_fast()
+    for i in range(8):
+        for j in range(8):
+            print oriRaster[i][j],
+        print
+
     oriRaster = np.array(oriRaster)
     # print time.time() - ts, ' secs'
 

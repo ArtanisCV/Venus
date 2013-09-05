@@ -1,0 +1,474 @@
+﻿生成启动时间为 2013/9/5 17:57:54。
+     1>项目“D:\GitHub\Venus\WaveletVectorization\cpp\WaveletVectorization.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         D:\Develop\Intel\Composer XE 2013\bin\ia32\icl.exe /c /Qvc11 /Qlocation,link,"$(VCInstallDir)\bin" /ZI /nologo /W4 /Od /Qftz- /D __INTEL_COMPILER=1300 /D _MBCS /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Qstd=c++0x /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP CubicBezier.hpp vectorizer.cpp
+         CubicBezier.hpp
+       CubicBezier.hpp(159): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       CubicBezier.hpp(169): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       CubicBezier.hpp(234): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       CubicBezier.hpp(244): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       CubicBezier.hpp(521): message #869: parameter "k" was never referenced
+               double partial_c00_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(521): message #869: parameter "j" was never referenced
+               double partial_c00_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(521): message #869: parameter "q" was never referenced
+               double partial_c00_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(526): message #869: parameter "k" was never referenced
+               double partial_c00_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(526): message #869: parameter "j" was never referenced
+               double partial_c00_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(526): message #869: parameter "q" was never referenced
+               double partial_c00_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(531): message #869: parameter "k" was never referenced
+               double partial_c00_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(531): message #869: parameter "j" was never referenced
+               double partial_c00_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(531): message #869: parameter "q" was never referenced
+               double partial_c00_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(536): message #869: parameter "k" was never referenced
+               double partial_c00_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(536): message #869: parameter "j" was never referenced
+               double partial_c00_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(536): message #869: parameter "q" was never referenced
+               double partial_c00_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(541): message #869: parameter "k" was never referenced
+               double partial_c00_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(541): message #869: parameter "j" was never referenced
+               double partial_c00_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(541): message #869: parameter "q" was never referenced
+               double partial_c00_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(546): message #869: parameter "k" was never referenced
+               double partial_c00_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(546): message #869: parameter "j" was never referenced
+               double partial_c00_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(546): message #869: parameter "q" was never referenced
+               double partial_c00_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(551): message #869: parameter "k" was never referenced
+               double partial_c00_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(551): message #869: parameter "j" was never referenced
+               double partial_c00_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(551): message #869: parameter "q" was never referenced
+               double partial_c00_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(556): message #869: parameter "k" was never referenced
+               double partial_c00_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(556): message #869: parameter "j" was never referenced
+               double partial_c00_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       CubicBezier.hpp(556): message #869: parameter "q" was never referenced
+               double partial_c00_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(593): message #869: parameter "k" was never referenced
+               double partial_c01_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(593): message #869: parameter "q" was never referenced
+               double partial_c01_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(598): message #869: parameter "k" was never referenced
+               double partial_c01_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(598): message #869: parameter "q" was never referenced
+               double partial_c01_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(603): message #869: parameter "k" was never referenced
+               double partial_c01_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(603): message #869: parameter "q" was never referenced
+               double partial_c01_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(608): message #869: parameter "k" was never referenced
+               double partial_c01_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(608): message #869: parameter "q" was never referenced
+               double partial_c01_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(613): message #869: parameter "k" was never referenced
+               double partial_c10_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(613): message #869: parameter "q" was never referenced
+               double partial_c10_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(618): message #869: parameter "k" was never referenced
+               double partial_c10_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(618): message #869: parameter "q" was never referenced
+               double partial_c10_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(623): message #869: parameter "k" was never referenced
+               double partial_c10_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(623): message #869: parameter "q" was never referenced
+               double partial_c10_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(628): message #869: parameter "k" was never referenced
+               double partial_c10_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(628): message #869: parameter "q" was never referenced
+               double partial_c10_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(665): message #869: parameter "k" was never referenced
+               double partial_c11_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(665): message #869: parameter "q" was never referenced
+               double partial_c11_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(670): message #869: parameter "k" was never referenced
+               double partial_c11_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(670): message #869: parameter "q" was never referenced
+               double partial_c11_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(675): message #869: parameter "k" was never referenced
+               double partial_c11_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(675): message #869: parameter "q" was never referenced
+               double partial_c11_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(680): message #869: parameter "k" was never referenced
+               double partial_c11_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       CubicBezier.hpp(680): message #869: parameter "q" was never referenced
+               double partial_c11_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       CubicBezier.hpp(960): message #869: parameter "section" was never referenced
+               List<double> get_grads(const CubicBezier& section, int ei, const Point& k, int j, const Point& q, double sign, double left, double right, double bottom, double top)
+                                                         ^
+         
+       CubicBezier.hpp(1008): message #869: parameter "section" was never referenced
+               List<double> get_impulses(const CubicBezier& section, int ei, const Point& k, int j)
+                                                            ^
+         
+       CubicBezier.hpp(1071): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < this->contour.size(); i += 3)
+                                     ^
+         
+         vectorizer.cpp
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(159): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(169): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(234): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(244): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < ts.size(); i++)
+                                     ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(521): message #869: parameter "k" was never referenced
+               double partial_c00_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(521): message #869: parameter "j" was never referenced
+               double partial_c00_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(521): message #869: parameter "q" was never referenced
+               double partial_c00_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(526): message #869: parameter "k" was never referenced
+               double partial_c00_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(526): message #869: parameter "j" was never referenced
+               double partial_c00_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(526): message #869: parameter "q" was never referenced
+               double partial_c00_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(531): message #869: parameter "k" was never referenced
+               double partial_c00_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(531): message #869: parameter "j" was never referenced
+               double partial_c00_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(531): message #869: parameter "q" was never referenced
+               double partial_c00_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(536): message #869: parameter "k" was never referenced
+               double partial_c00_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(536): message #869: parameter "j" was never referenced
+               double partial_c00_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(536): message #869: parameter "q" was never referenced
+               double partial_c00_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(541): message #869: parameter "k" was never referenced
+               double partial_c00_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(541): message #869: parameter "j" was never referenced
+               double partial_c00_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(541): message #869: parameter "q" was never referenced
+               double partial_c00_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(546): message #869: parameter "k" was never referenced
+               double partial_c00_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(546): message #869: parameter "j" was never referenced
+               double partial_c00_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(546): message #869: parameter "q" was never referenced
+               double partial_c00_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(551): message #869: parameter "k" was never referenced
+               double partial_c00_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(551): message #869: parameter "j" was never referenced
+               double partial_c00_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(551): message #869: parameter "q" was never referenced
+               double partial_c00_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(556): message #869: parameter "k" was never referenced
+               double partial_c00_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(556): message #869: parameter "j" was never referenced
+               double partial_c00_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(556): message #869: parameter "q" was never referenced
+               double partial_c00_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(593): message #869: parameter "k" was never referenced
+               double partial_c01_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(593): message #869: parameter "q" was never referenced
+               double partial_c01_y0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(598): message #869: parameter "k" was never referenced
+               double partial_c01_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(598): message #869: parameter "q" was never referenced
+               double partial_c01_y1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(603): message #869: parameter "k" was never referenced
+               double partial_c01_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(603): message #869: parameter "q" was never referenced
+               double partial_c01_y2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(608): message #869: parameter "k" was never referenced
+               double partial_c01_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(608): message #869: parameter "q" was never referenced
+               double partial_c01_y3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(613): message #869: parameter "k" was never referenced
+               double partial_c10_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(613): message #869: parameter "q" was never referenced
+               double partial_c10_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(618): message #869: parameter "k" was never referenced
+               double partial_c10_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(618): message #869: parameter "q" was never referenced
+               double partial_c10_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(623): message #869: parameter "k" was never referenced
+               double partial_c10_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(623): message #869: parameter "q" was never referenced
+               double partial_c10_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(628): message #869: parameter "k" was never referenced
+               double partial_c10_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(628): message #869: parameter "q" was never referenced
+               double partial_c10_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(665): message #869: parameter "k" was never referenced
+               double partial_c11_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(665): message #869: parameter "q" was never referenced
+               double partial_c11_x0(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(670): message #869: parameter "k" was never referenced
+               double partial_c11_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(670): message #869: parameter "q" was never referenced
+               double partial_c11_x1(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(675): message #869: parameter "k" was never referenced
+               double partial_c11_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(675): message #869: parameter "q" was never referenced
+               double partial_c11_x2(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(680): message #869: parameter "k" was never referenced
+               double partial_c11_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                  ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(680): message #869: parameter "q" was never referenced
+               double partial_c11_x3(const Point& k, int j, double t0, double t1, const Point& q, double sign)
+                                                                                               ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(960): message #869: parameter "section" was never referenced
+               List<double> get_grads(const CubicBezier& section, int ei, const Point& k, int j, const Point& q, double sign, double left, double right, double bottom, double top)
+                                                         ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(1008): message #869: parameter "section" was never referenced
+               List<double> get_impulses(const CubicBezier& section, int ei, const Point& k, int j)
+                                                            ^
+         
+       D:\GitHub\Venus\WaveletVectorization\cpp\CubicBezier.hpp(1071): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < this->contour.size(); i += 3)
+                                     ^
+         
+       vectorizer.cpp(34): message #2407: the initialization of member "Rasterizer::w" will be done before that of member "Rasterizer::contour"
+                   : contour(contour), w(w), h(h)
+                                       ^
+         
+       vectorizer.cpp(98): message #177: variable "KQ00" was declared but never referenced
+                       auto KQ00 = std::get<0>(__tmp0);
+                            ^
+         
+       vectorizer.cpp(191): message #2557: comparison between signed and unsigned operands
+                   for (int i = 0; i < path.size(); i += 2)
+                                     ^
+         
+       Link:
+         D:\Develop\Intel\Composer XE 2013\bin\ia32\xilink.exe /OUT:"D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\WaveletVectorization.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.lib" /MACHINE:X86 Debug\CubicBezier.obj
+         Debug\solver.obj
+         Debug\vectorizer.obj
+         xilink: executing 'link'
+       LinkEmbedManifest:
+         D:\Develop\Intel\Composer XE 2013\bin\ia32\xilink.exe /OUT:"D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\WaveletVectorization.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.lib" /MACHINE:X86 Debug\CubicBezier.obj
+         Debug\solver.obj
+         Debug\vectorizer.obj
+         xilink: executing 'link'
+         WaveletVectorization.vcxproj -> D:\GitHub\Venus\WaveletVectorization\cpp\Debug\WaveletVectorization.exe
+     1>已完成生成项目“D:\GitHub\Venus\WaveletVectorization\cpp\WaveletVectorization.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:02.54

@@ -1,6 +1,6 @@
 import numpy as np
 from collections import namedtuple
-from WaveletVectorization.util.solver import quadric
+from util.solver import quadric
 
 # -----------------------------------------------------------------------------
 Point = namedtuple('Point', 'x y')

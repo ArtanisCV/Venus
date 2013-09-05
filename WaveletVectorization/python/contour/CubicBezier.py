@@ -458,7 +458,6 @@ class CubicBezier:
                 return -CubicBezier.cpsi_1d_jk(self.X(t), j, kx) * CubicBezier.dF_dp(i, t)
 
         result = 0
-        eps = 1e-8
         a, b, c, d = CubicBezier.cubicCoefficients(self.y0, self.y1, self.y2, self.y3)
 
         # t0

@@ -4,10 +4,10 @@
     <list default="true" id="2c27e3f6-f4e1-40c6-ae87-965772195dfd" name="Default" comment="" />
     <ignored path="Venus.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/CubicBezier.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377519620709" ignored="false" />
+    <file path="/CubicBezier.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1378373480724" ignored="false" />
     <file path="/QuadraticBezier.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1376986804318" ignored="false" />
     <file path="/README.md" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1376805718741" ignored="false" />
-    <file path="/vectorizer.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377524062813" ignored="false" />
+    <file path="/vectorizer.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1378374027916" ignored="false" />
     <file path="/core.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377520770389" ignored="false" />
     <file path="/circle.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377156730529" ignored="false" />
     <file path="/gauss.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377154699751" ignored="false" />
@@ -32,13 +32,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="vectorizer.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/WaveletVectorization/vectorizer.py">
+      <file leaf-file-name="CubicBezier.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="200" column="16" selection-start="7464" selection-end="7464" vertical-scroll-proportion="0.16666667">
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
+            <state line="99" column="0" selection-start="4355" selection-end="4355" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vectorizer.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="0" selection-start="2244" selection-end="2244" vertical-scroll-proportion="0.63247865">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,6 +73,9 @@
         <option value="$PROJECT_DIR$/WaveletVectorization/core.py" />
         <option value="$PROJECT_DIR$/WaveletVectorization/contour/CubicBezier.py" />
         <option value="$PROJECT_DIR$/WaveletVectorization/vectorizer.py" />
+        <option value="$PROJECT_DIR$/WaveletVectorization/python/contour/QuadraticBezier.py" />
+        <option value="$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py" />
+        <option value="$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py" />
       </list>
     </option>
   </component>
@@ -166,6 +176,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WaveletVectorization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="contour" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -203,27 +235,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.vectorizer">
-    <configuration default="false" name="vectorizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WaveletVectorization" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Venus" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WaveletVectorization/vectorizer.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="core" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -244,6 +255,27 @@
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <ConfigurationWrapper RunnerId="PythonCover" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="vectorizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WaveletVectorization/python" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Venus" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
@@ -307,13 +339,14 @@
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Python.vectorizer" />
-      <item index="1" class="java.lang.String" itemvalue="Python.core" />
+      <item index="0" class="java.lang.String" itemvalue="Python.core" />
+      <item index="1" class="java.lang.String" itemvalue="Python.vectorizer" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="Python.vectorizer" />
-        <item index="1" class="java.lang.String" itemvalue="Python.core" />
+        <item index="1" class="java.lang.String" itemvalue="Python.vectorizer" />
+        <item index="2" class="java.lang.String" itemvalue="Python.core" />
       </list>
     </recent_temporary>
   </component>
@@ -344,23 +377,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21069588" sideWeight="0.69316596" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35006973" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18363403" sideWeight="0.69316596" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34867504" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30404463" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30683404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30683404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -425,10 +458,45 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="194" />
+      <option name="time" value="223" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://D:/Develop/Anaconda/Lib/multiprocessing/pool.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="293" column="39" selection-start="9997" selection-end="9997" vertical-scroll-proportion="0.52340424" />
@@ -441,14 +509,7 @@
     </entry>
     <entry file="file://D:/Develop/Anaconda/Lib/site-packages/numpy/core/numeric.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="226" column="20" selection-start="6677" selection-end="6677" vertical-scroll-proportion="0.3319149">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/gauss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="14" selection-start="2013" selection-end="2013" vertical-scroll-proportion="0.8893617" />
+        <state line="226" column="20" selection-start="6677" selection-end="6677" vertical-scroll-proportion="0.3319149" />
       </provider>
     </entry>
     <entry file="file://D:/Develop/Anaconda/Lib/site-packages/scipy/integrate/quadrature.py">
@@ -458,79 +519,40 @@
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-347824807/numpy/core/multiarray.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="353" column="13" selection-start="13761" selection-end="13761" vertical-scroll-proportion="0.33284885">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="8" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/util/solver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.031915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/util/solver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="4" selection-start="528" selection-end="528" vertical-scroll-proportion="0.3318078">
-          <folding>
-            <element signature="e#0#20#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="353" column="13" selection-start="13761" selection-end="13761" vertical-scroll-proportion="0.33284885" />
       </provider>
     </entry>
     <entry file="file://D:/Develop/Anaconda/Lib/site-packages/scipy/misc/common.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="330" column="4" selection-start="8627" selection-end="8627" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1365535958000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/gaussMixture.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="37" selection-start="2539" selection-end="2539" vertical-scroll-proportion="2.9042554">
-          <folding />
-        </state>
+        <state line="330" column="4" selection-start="8627" selection-end="8627" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-347824807/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="867" column="8" selection-start="27596" selection-end="27596" vertical-scroll-proportion="0.3319149">
+        <state line="867" column="8" selection-start="27596" selection-end="27596" vertical-scroll-proportion="0.3319149" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/QuadraticBezier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="85" selection-end="85" vertical-scroll-proportion="0.06410257" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/util/solver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="0" selection-start="745" selection-end="745" vertical-scroll-proportion="0.3318078" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="0" selection-start="4355" selection-end="4355" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/contour/CubicBezier.py">
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="611" column="25" selection-start="42520" selection-end="42520" vertical-scroll-proportion="1.4945055">
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="374" column="80" selection-start="11197" selection-end="11197" vertical-scroll-proportion="0.48076922">
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/vectorizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="200" column="16" selection-start="7464" selection-end="7464" vertical-scroll-proportion="0.16666667">
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
+        <state line="58" column="0" selection-start="2244" selection-end="2244" vertical-scroll-proportion="0.63247865">
+          <folding />
         </state>
       </provider>
     </entry>
