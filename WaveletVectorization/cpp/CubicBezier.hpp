@@ -51,24 +51,24 @@ struct Point
 //
 
 template <typename T>
-List<T> filter(const List<T>& li, function<bool(double)> f)
+List<T> Filter(const List<T>& li, function<bool(double)> f)
 {
     List<T> result;
 
-    for (auto item : li)
-        if (f(item))
-            result.push_back(item);
+    for (auto __item : li)
+        if (f(__item))
+            result.push_back(__item);
 
     return result;
 }
 
 template <typename T1, typename T2>
-List<T2> map(const List<T1>& li, function<T2(T1)> f)
+List<T2> Map(const List<T1>& li, function<T2(T1)> f)
 {
     List<T2> result;
 
-    for (auto item : li)
-        result.push_back(f(item));
+    for (auto __item : li)
+        result.push_back(f(__item));
 
     return result;
 }
@@ -77,14 +77,14 @@ List<T2> map(const List<T1>& li, function<T2(T1)> f)
 class CubicBezier
 {
 public:
-	CubicBezier(double x0, double y0, double x1, double y1, 
-				double x2, double y2, double x3, double y3):
-		x0(x0), y0(y0), x1(x1), y1(y1), 
-		x2(x2), y2(y2), x3(x3), y3(y3)
-	{
-	}
+    CubicBezier(double x0, double y0, double x1, double y1, 
+                double x2, double y2, double x3, double y3):
+        x0(x0), y0(y0), x1(x1), y1(y1), 
+        x2(x2), y2(y2), x3(x3), y3(y3)
+    {
+    }
 
-	tuple<double, double> evaluate(double t)
+    tuple<double, double> evaluate(double t)
     {
         return make_tuple(this->x0*pow((1-t),3) + 3*this->x1*pow((1-t),2)*t
             + 3*this->x2*(1-t)*pow(t,2) + this->x3*pow(t,3),
@@ -151,7 +151,7 @@ public:
         auto __tmp3 = cubic(ay, by, cy, _dy-top);
         ts.insert(ts.end(), __tmp3.begin(), __tmp3.end());
         ts.push_back(1);
-        ts = filter(ts, [is_t_in](double t){ return 0 <= t && t <= 1 && is_t_in(t, 1e-5); });
+        ts = Filter(ts, [is_t_in](double t){ return 0 <= t && t <= 1 && is_t_in(t, 1e-5); });
         sort(ts.begin(), ts.end());
 
         // manual
@@ -175,14 +175,14 @@ public:
         }
 
         List<Point> sections;
-        for (auto item : pairs)
+        for (auto __item : pairs)
         {
-            auto a = item.x;
-            auto b = item.y;
+            auto a = __item.x;
+            auto b = __item.y;
 
             auto sec = this->subsection(a, b);
             if (!is_subsection_valid(sec, 1e-5))
-                sections.push_back(item);
+                sections.push_back(__item);
         }
 
         return sections;
@@ -226,7 +226,7 @@ public:
         auto __tmp3 = cubic(ay, by, cy, _dy-top);
         ts.insert(ts.end(), __tmp3.begin(), __tmp3.end());
         ts.push_back(1);
-        ts = filter(ts, [is_t_in](double t){ return 0 <= t && t <= 1 && is_t_in(t, 1e-5); });
+        ts = Filter(ts, [is_t_in](double t){ return 0 <= t && t <= 1 && is_t_in(t, 1e-5); });
         sort(ts.begin(), ts.end());
 
         // manual
@@ -250,10 +250,10 @@ public:
         }
 
         List<CubicBezier> sections;
-        for (auto item : pairs)
+        for (auto __item : pairs)
         {
-            auto a = item.x;
-            auto b = item.y;
+            auto a = __item.x;
+            auto b = __item.y;
 
             auto sec = this->subsection(a, b);
             if (!is_subsection_valid(sec, 1e-5))
@@ -903,7 +903,7 @@ public:
         // t0
         auto roots = cubic(a, b, c, d - double(ky) / pow(2, j));
         for (auto root : roots)
-            if (-eps <= root <= 1 + eps)
+            if (-eps <= root && root <= 1 + eps)
                 result += helper(root) * pow(2, j);
 
         // t1
@@ -950,14 +950,14 @@ public:
         // t2
         roots = cubic(a, b, c, d - (1.0 + ky) / pow(2, j));
         for (auto root : roots)
-            if (-eps <= root <= 1 + eps)
+            if (-eps <= root && root <= 1 + eps)
                 result += helper(root) * pow(2, j);
 
         return result;
     }
 
     // manual
-    List<double> get_grads(const CubicBezier& section, int ei, const Point& k, int j, const Point& q, double sign, double left, double right, double bottom, double top)
+    List<double> get_grads(const List<double>& section, int ei, const Point& k, int j, const Point& q, double sign, double left, double right, double bottom, double top)
     {
         typedef double (CubicBezier::* MethodType)(const Point&, int, double, double, const Point&, double);
 
@@ -989,10 +989,10 @@ public:
 
         List<double> grads(8, 0.0);
 
-        for (auto item : this->clipTrue(left, right, bottom, top))
+        for (auto __item : this->clipTrue(left, right, bottom, top))
         {
-            auto t0 = item.x;
-            auto t1 = item.y;
+            auto t0 = __item.x;
+            auto t1 = __item.y;
 
             for (int i = 0; i < 8; i++)
             {
@@ -1005,7 +1005,7 @@ public:
     }
     //
 
-    List<double> get_impulses(const CubicBezier& section, int ei, const Point& k, int j)
+    List<double> get_impulses(const List<double>& section, int ei, const Point& k, int j)
     {
         List<double> impulses(8, 0);
 
@@ -1026,7 +1026,7 @@ public:
     }
 
 private:
-	double x0, y0, x1, y1, x2, y2, x3, y3;
+    double x0, y0, x1, y1, x2, y2, x3, y3;
 };
 
 
@@ -1040,7 +1040,7 @@ public:
 
     void process(function<Point(Point)> f)
     {
-        this->contour = map(this->contour, f);
+        this->contour = Map(this->contour, f);
     }
 
     double area()
@@ -1050,12 +1050,12 @@ public:
             return a.x * b.y - a.y * b.x;
         };
         auto s = 0.0;
-        for (auto item : this->each())
+        for (auto __item : this->each())
         {
-            auto v0 = get<0>(item);
-            auto v1 = get<1>(item);
-            auto v2 = get<2>(item);
-            auto v3 = get<3>(item);
+            auto v0 = get<0>(__item);
+            auto v1 = get<1>(__item);
+            auto v2 = get<2>(__item);
+            auto v3 = get<3>(__item);
 
             s += 3./10 * det(v0,v1) + 3./20 * det(v1,v2) + 3./10 * det(v2,v3)
                 + 3./20 * det(v0,v2) + 3./20 * det(v1,v3) + 1./20 * det(v0,v3);
@@ -1084,10 +1084,40 @@ public:
 
     tuple<Point, Point> get_KL(const List<double>& section)
     {
-        auto bezier = CubicBezier(section[0], section[4], section[1], section[5], section[2], section[6], section[3], section[7]);
+        CubicBezier bezier(section[0], section[4], section[1], section[5], section[2], section[6], section[3], section[7]);
         return bezier.get_KL();
     }
 
-private:
+    // manual
+    List<tuple<tuple<Point, Point, Point, Point>, tuple<int, int, int, int>>> each_with_indice()
+    {
+        List<tuple<tuple<Point, Point, Point, Point>, tuple<int, int, int, int>>> result;
+
+        for (int i = 0; i < this->contour.size(); i += 3)
+        {
+            auto v3 = this->contour[i];
+            auto v2 = this->contour[(i-1 + this->contour.size()) % this->contour.size()];
+            auto v1 = this->contour[(i-2 + this->contour.size()) % this->contour.size()];
+            auto v0 = this->contour[(i-3 + this->contour.size()) % this->contour.size()];
+
+            result.push_back(make_tuple(make_tuple(v0, v1, v2, v3), make_tuple(i-3, i-2, i-1, i)));
+        }
+
+        return result;
+    }
+    //
+
+    List<double> get_grads(const List<double>& section, int ei, const Point& k, int j, const Point& q, double sign, double left, double right, double bottom, double top)
+    {
+        CubicBezier bezier(section[0], section[4], section[1], section[5], section[2], section[6], section[3], section[7]);
+        return bezier.get_grads(section, ei, k, j, q, sign, left, right, bottom, top);
+    }
+
+    List<double> get_impulses(const List<double>& section, int ei, const Point& k, int j)
+    {
+        CubicBezier bezier(section[0], section[4], section[1], section[5], section[2], section[6], section[3], section[7]);
+        return bezier.get_impulses(section, ei, k, j);
+    }
+
     List<Point> contour;
 };

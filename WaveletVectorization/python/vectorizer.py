@@ -107,7 +107,6 @@ class Vectorizer:
         self.max_j = int(math.ceil(math.log(max(w, h), 2))) - 1
         self.wh = 2 ** (self.max_j + 1)
         self.contour = contour
-        self.lattice = [Point(x, y) for x in xrange(h) for y in xrange(w)]
         self.num = len(self.contour.contour) * 2
         self.lattice = [(x, y) for x in xrange(h) for y in xrange(w)]
         # prepare all dc_dX
@@ -206,11 +205,6 @@ if __name__ == '__main__':
 
     # ts = time.time()
     oriRaster = Rasterizer(convertPathToContour(oriPath), 8, 8).get_fast()
-    for i in range(8):
-        for j in range(8):
-            print oriRaster[i][j],
-        print
-
     oriRaster = np.array(oriRaster)
     # print time.time() - ts, ' secs'
 

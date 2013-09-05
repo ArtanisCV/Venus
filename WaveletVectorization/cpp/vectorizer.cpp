@@ -1,5 +1,7 @@
 #include <cmath>
+#include <cstring>
 #include <functional>
+#include <iostream>
 #include <tuple>
 #include <unordered_map>
 #include "CubicBezier.hpp"
@@ -31,7 +33,9 @@ class Rasterizer
 {
 public:
     Rasterizer(const Contour& contour, double w, double h)
+    // manual
         : contour(contour), w(w), h(h)
+    //
     {
         this->max_j = int(ceil(log(max(w, h)) / log(2))) - 1;
         this->wh = pow(2, (this->max_j + 1));
@@ -180,10 +184,202 @@ private:
                   hash<tuple<int, int, int>>> all_c;
 };
 
+// manual
+template<typename T>
+void addmul(List<T>& A, const List<T>& B, double mul = 1)
+{
+    for (int i = 0; i < A.size(); i++)
+        A[i] += mul * B[i];
+}
+//
+
+class Vectorizer
+{
+public:
+    Vectorizer(const Contour& contour, const List<List<double>>& org_img) :
+    // manual
+        contour(contour)
+    //
+    {
+        // manual
+        int h = org_img.size(), w = org_img[0].size();
+        //
+
+        this->w = w;
+        this->h = h;
+        this->org_img = org_img;
+        this->max_j = int(ceil(log(max(w, h)) / log(2))) - 1;
+        this->wh = pow(2, (this->max_j + 1));
+        this->num = (this->contour).contour.size() * 2;
+        for (int x = 0; x < h; x++)
+            for (int y = 0; y < w; y++)
+                this->lattice.push_back(Point(x, y));
+
+        //manual
+        // prepare all dc_dX
+        for (int j = 0; j <= this->max_j; j++)
+            for (int kx = 0; kx <= (1 << j); kx++)
+                for (int ky = 0; ky <= (1 << j); ky++)
+                {
+                    auto dc_dx1 = this->dc_dX(j, Point(kx, ky), 1);
+                    auto dc_dx2 = this->dc_dX(j, Point(kx, ky), 2);
+                    auto dc_dx3 = this->dc_dX(j, Point(kx, ky), 3);
+                    this->all_dc[make_tuple(j, kx, ky)] = make_tuple(dc_dx1, dc_dx2, dc_dx3);
+                }
+        //
+    }
+
+    static double psi(const Point& p, const Point& e, int j, const Point& k)
+    {
+        auto psi_1d = [](double p, int e) -> double
+        {
+            if (e == 0)
+                return 0 <= p && p < 1 ? 1.0 : 0.0;
+            else
+                return 0 <= p && p < 1 ? (0 <= p && p < 0.5 ? 1.0 : -1.0) : 0.0;
+        };
+
+        return pow(2, j) * psi_1d(pow(2, j) * p.x - k.x, e.x) * psi_1d(pow(2, j) * p.y - k.y, e.y);
+    }
+
+    List<double> dc_dX(int j, const Point& k, int ei)
+    {
+        auto normalize = [this](double p)
+        {
+            return p / double(this->wh);
+        };
+
+        Point Q[] = {Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)};
+        int sign[][4] = {{1, 1, 1, 1}, {1, -1, 1, -1}, {+1, +1, -1, -1}, {+1, -1, -1, +1}};
+        List<double> grads(this->num, 0);
+
+        for (auto __item : this->contour.each_with_indice())
+        {
+            auto section = get<0>(__item);
+            auto indice = get<1>(__item);
+
+            // manual
+            List<double> __section;
+            __section.push_back(normalize(get<0>(section).x));
+            __section.push_back(normalize(get<1>(section).x));
+            __section.push_back(normalize(get<2>(section).x));
+            __section.push_back(normalize(get<3>(section).x));
+            __section.push_back(normalize(get<0>(section).y));
+            __section.push_back(normalize(get<1>(section).y));
+            __section.push_back(normalize(get<2>(section).y));
+            __section.push_back(normalize(get<3>(section).y));
+
+            for (int i = 0; i < 4; i++)
+            //
+            {
+                // manual
+                Point q = Q[i];
+                double left = (k.x + q.x * 0.5) / pow(2, j);
+                double right = (k.x + q.x * 0.5 + 0.5) / pow(2, j);
+                double bottom = (k.y + q.y * 0.5 + 0.5) / pow(2, j);
+                double top = (k.y + q.y * 0.5) / pow(2, j);
+
+                auto sec_grads = this->contour.get_grads(__section, ei, k, j, q,
+                    sign[ei][i], left, right, bottom, top);
+                //
+
+                grads[(this->num + get<0>(indice) * 2) % this->num] += sec_grads[0];
+                grads[(this->num + get<0>(indice) * 2 + 1) % this->num] += sec_grads[1];
+                grads[(this->num + get<1>(indice) * 2) % this->num] += sec_grads[2];
+                grads[(this->num + get<1>(indice) * 2 + 1) % this->num] += sec_grads[3];
+                grads[(this->num + get<2>(indice) * 2) % this->num] += sec_grads[4];
+                grads[(this->num + get<2>(indice) * 2 + 1) % this->num] += sec_grads[5];
+                grads[(this->num + get<3>(indice) * 2) % this->num] += sec_grads[6];
+                grads[(this->num + get<3>(indice) * 2 + 1) % this->num] += sec_grads[7];
+            }
+
+            // manual
+            auto sec_impulses = this->contour.get_impulses(__section, ei, k, j);
+            //
+            grads[(this->num + get<0>(indice) * 2) % this->num] += sec_impulses[0];
+            grads[(this->num + get<0>(indice) * 2 + 1) % this->num] += sec_impulses[1];
+            grads[(this->num + get<1>(indice) * 2) % this->num] += sec_impulses[2];
+            grads[(this->num + get<1>(indice) * 2 + 1) % this->num] += sec_impulses[3];
+            grads[(this->num + get<2>(indice) * 2) % this->num] += sec_impulses[4];
+            grads[(this->num + get<2>(indice) * 2 + 1) % this->num] += sec_impulses[5];
+            grads[(this->num + get<3>(indice) * 2) % this->num] += sec_impulses[6];
+            grads[(this->num + get<3>(indice) * 2 + 1) % this->num] += sec_impulses[7];
+        }
+
+        for (int i = 0; i < this->num; i++)
+            grads[i] /= double(this->wh);
+
+        return grads;
+    }
+
+    List<double> dLike_dX()
+    {
+        Point E[] = {Point(0, 0), Point(0, 1), Point(1, 0), Point(1, 1)};
+        auto raster = Rasterizer(this->contour, this->w, this->h).get();
+        List<double> grads(this->num, 0);
+
+        for (auto __item : this->lattice)
+        {
+            // manual
+            int x = (int)__item.x;
+            int y = (int)__item.y;
+            //
+            Point p(x / double(this->wh), y / double(this->wh));
+
+            // dR/dX
+            List<double> grads_R(this->num, 0);
+            Point k0(0, 0);
+            addmul(grads_R, this->dc_dX(0, k0, 0), this->psi(p, E[0], 0, k0));
+            for (int j = 0; j <= max_j; j++)
+                for (int kx = 0; kx < pow(2, j); kx++)
+                    for (int ky = 0; ky < pow(2, j); ky++)
+                    {
+                        Point k(kx, ky);
+                        auto dcs = this->all_dc[make_tuple(j, kx, ky)];
+
+                        addmul(grads_R, get<0>(dcs), this->psi(p, E[1], j, k));
+                        addmul(grads_R, get<1>(dcs), this->psi(p, E[2], j, k));
+                        addmul(grads_R, get<2>(dcs), this->psi(p, E[3], j, k));
+                    }
+            addmul(grads, grads_R, 2 * (double(raster[x][y]) - double(this->org_img[x][y])));
+        }
+
+        return grads;
+    }
+
+    double like()
+    {
+        auto raster = Rasterizer(this->contour, this->w, this->h).get();
+        double s = 0;
+        for (auto __item : this->lattice)
+        {
+            double x = __item.x;
+            double y = __item.y;
+            s += pow((double(raster[x][y]) - double(this->org_img[x][y])), 2);
+        }
+    
+        return s;
+    }
+
+private:
+    int w, h, max_j, num;
+    double wh;
+    List<List<double>> org_img;
+    Contour contour;
+    List<Point> lattice;
+    unordered_map<tuple<int, int, int>, tuple<List<double>, List<double>, List<double>>, 
+        hash<tuple<int, int, int>>> all_dc;
+};
+
 int main()
 {
-    double tmp[] = {1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3};
-    List<double> oriPath(tmp, tmp + sizeof(tmp) / sizeof(double));
+    // manual
+    double tmp1[] = {1, 1, 3, 1, 7, 3, 7, 7, 3, 7, 1, 3};
+    List<double> oriPath(tmp1, tmp1 + sizeof(tmp1) / sizeof(double));
+
+    double tmp2[] = {2, 1, 4, 1, 7, 3, 7, 7, 3, 7, 4, 3};
+    List<double> optPath(tmp2, tmp2 + sizeof(tmp2) / sizeof(double));
+    //
 
     auto convertPathToContour = [](const List<double>& path) -> Contour
     {
@@ -194,10 +390,46 @@ int main()
     };
 
     auto oriRaster = Rasterizer(convertPathToContour(oriPath), 8, 8).get();
-    for (int i = 0; i < 8; i++)
+
+    auto approx_dLike_dX = [convertPathToContour, oriRaster](const List<double>& X, double eps) -> List<double>
     {
-        for (int j = 0; j < 8; j++)
-            printf("%f ", oriRaster[i][j]);
-        printf("\n");
-    }
+        List<double> grads(X.size(), 0);
+
+        for (int i = 0; i < X.size(); i++)
+        {
+            List<double> pathLarge = X;
+            pathLarge[i] += eps;
+            auto contourLarge = convertPathToContour(pathLarge);
+
+            List<double> pathSmall = X;
+            pathSmall[i] -= eps;
+            auto contourSmall = convertPathToContour(pathSmall);
+
+            auto likeLarge = Vectorizer(contourLarge, oriRaster).like();
+            auto likeSmall = Vectorizer(contourSmall, oriRaster).like();
+
+            grads[i] = (likeLarge - likeSmall) / (2 * eps);
+        }
+
+        return grads;
+    };
+
+    // manual
+    cout << "Analytical dLike_dX" << endl;
+    //
+    auto __tmp0 = Vectorizer(convertPathToContour(optPath), oriRaster).dLike_dX();
+    // manual
+    for (auto __item : __tmp0)
+        cout << __item << " ";
+    cout << endl;
+
+    cout << endl;
+    cout << "Approximate dLike_dX" << endl;
+    //
+    auto __tmp1 = approx_dLike_dX(optPath, 1e-4);
+    // manual
+    for (auto __item : __tmp1)
+        cout << __item << " ";
+    cout << endl;
+    //
 }
