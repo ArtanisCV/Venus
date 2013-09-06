@@ -65,8 +65,8 @@ public:
         //manual
         // prepare all c
         for (int j = 0; j <= this->max_j; j++)
-            for (int kx = 0; kx <= (1 << j); kx++)
-                for (int ky = 0; ky <= (1 << j); ky++)
+            for (int kx = 0; kx < (1 << j); kx++)
+                for (int ky = 0; ky < (1 << j); ky++)
                     this->all_c[make_tuple(j, kx, ky)] = this->c(j, Point(kx, ky));
         //
     }
@@ -226,8 +226,8 @@ public:
         //manual
         // prepare all dc_dX
         for (int j = 0; j <= this->max_j; j++)
-            for (int kx = 0; kx <= (1 << j); kx++)
-                for (int ky = 0; ky <= (1 << j); ky++)
+            for (int kx = 0; kx < (1 << j); kx++)
+                for (int ky = 0; ky < (1 << j); ky++)
                 {
                     auto dc_dx1 = this->dc_dX(j, Point(kx, ky), 1);
                     auto dc_dx2 = this->dc_dX(j, Point(kx, ky), 2);

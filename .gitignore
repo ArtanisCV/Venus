@@ -18,6 +18,9 @@ develop-eggs
 lib
 lib64
 
+[rR]elease/
+[dD]ebug/
+
 # Installer logs
 pip-log.txt
 
