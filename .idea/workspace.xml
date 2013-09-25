@@ -4,7 +4,7 @@
     <list default="true" id="2c27e3f6-f4e1-40c6-ae87-965772195dfd" name="Default" comment="" />
     <ignored path="Venus.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/CubicBezier.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1378373480724" ignored="false" />
+    <file path="/CubicBezier.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1380120835545" ignored="false" />
     <file path="/QuadraticBezier.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1376986804318" ignored="false" />
     <file path="/README.md" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1376805718741" ignored="false" />
     <file path="/vectorizer.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1378374027916" ignored="false" />
@@ -13,6 +13,20 @@
     <file path="/gauss.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377154699751" ignored="false" />
     <file path="/gaussMixture.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377157268122" ignored="false" />
     <file path="/start_script.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1377187847950" ignored="false" />
+    <file path="/Dummy.txt" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379506386481" ignored="false" />
+    <file path="/optimization.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379574484282" ignored="false" />
+    <file path="/main.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379775149317" ignored="false" />
+    <file path="/kayak.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379580778968" ignored="false" />
+    <file path="/dorm.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379582239495" ignored="false" />
+    <file path="/flight.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379580636095" ignored="false" />
+    <file path="/socialNetwork.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379585853484" ignored="false" />
+    <file path="/docClass.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379696496154" ignored="false" />
+    <file path="/feedFilter.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379746751566" ignored="false" />
+    <file path="/akismetTest.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379702608089" ignored="false" />
+    <file path="/treePredict.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379770838672" ignored="false" />
+    <file path="/zillow.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379773475847" ignored="false" />
+    <file path="/hotOrNot.py" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1379775996185" ignored="false" />
+    <file path="/CubicBezier.hpp" changelist="2c27e3f6-f4e1-40c6-ae87-965772195dfd" time="1380120901942" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +40,11 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DatabaseView">
+    <flatten value="false" />
+    <groupTables value="false" />
+    <sortChildren value="false" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="Venus" />
@@ -35,16 +54,27 @@
       <file leaf-file-name="CubicBezier.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="0" selection-start="4355" selection-end="4355" vertical-scroll-proportion="0.0">
+            <state line="403" column="39" selection-start="28240" selection-end="28240" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CubicBezier.hpp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WaveletVectorization/cpp/clang/CubicBezier.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="869" column="27" selection-start="39731" selection-end="39731" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vectorizer.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+      <file leaf-file-name="CubicBezier.hpp" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/WaveletVectorization/cpp/msvc/CubicBezier.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="16" selection-start="1696" selection-end="1700" vertical-scroll-proportion="0.5886628">
+            <state line="866" column="27" selection-start="39644" selection-end="39644" vertical-scroll-proportion="0.50660795">
               <folding />
             </state>
           </provider>
@@ -57,25 +87,33 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Mercury" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/WaveletVectorization/contour/Line.py" />
-        <option value="$PROJECT_DIR$/test_vasync_client.py" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/contour/QuadraticBezier.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/circle.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/gauss.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/gaussMixture.py" />
-        <option value="$USER_HOME$/.PyCharm20/system/python_stubs/-347824807/numpy/core/multiarray.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/impulse.py" />
-        <option value="$USER_HOME$/.PyCharm20/system/python_stubs/-347824807/__builtin__.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/core.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/contour/CubicBezier.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/vectorizer.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/python/contour/QuadraticBezier.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch06/feedFilter.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch06/main.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch07/zillow.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch05/dorm.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch05/flight.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch05/kayak.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch05/optimization.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch05/socialNetwork.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch06/akismet.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch06/akismetTest.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch07/treePredict.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch07/hotOrNot.py" />
+        <option value="$PROJECT_DIR$/../Mercury/pci/ch07/main.py" />
         <option value="$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py" />
-        <option value="$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py" />
+        <option value="$PROJECT_DIR$/WaveletVectorization/cpp/clang/CubicBezier.hpp" />
+        <option value="$PROJECT_DIR$/WaveletVectorization/cpp/msvc/CubicBezier.hpp" />
       </list>
     </option>
   </component>
@@ -98,13 +136,13 @@
         </expanded-state>
         <selected-state>
           <State>
-            <id>PyCallingNonCallableInspection</id>
+            <id>PyBroadExceptionInspection</id>
           </State>
         </selected-state>
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -130,13 +168,54 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Venus" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mercury" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mercury" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pci" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mercury" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pci" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ch07" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -203,20 +282,83 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WaveletVectorization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cpp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WaveletVectorization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cpp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="msvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Venus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WaveletVectorization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cpp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clang" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="editor.preferences.completion" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.general" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Mercury" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -232,6 +374,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\GitHub\Venus\WaveletVectorization" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Mercury\pci" />
     </key>
   </component>
   <component name="RunManager" selected="Python.vectorizer">
@@ -279,6 +424,27 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Mercury/pci/ch07" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Mercury" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Mercury/pci/ch07/main.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Nosetests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -288,7 +454,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Venus" />
+      <module name="Mercury" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="CLASS_NAME" value="" />
@@ -312,7 +478,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Venus" />
+      <module name="Mercury" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
@@ -327,7 +493,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Venus" />
+      <module name="Mercury" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="CLASS_NAME" value="" />
@@ -338,15 +504,18 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.core" />
       <item index="1" class="java.lang.String" itemvalue="Python.vectorizer" />
+      <item index="2" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.vectorizer" />
-        <item index="1" class="java.lang.String" itemvalue="Python.vectorizer" />
-        <item index="2" class="java.lang.String" itemvalue="Python.core" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.main" />
+        <item index="3" class="java.lang.String" itemvalue="Python.main" />
+        <item index="4" class="java.lang.String" itemvalue="Python.vectorizer" />
       </list>
     </recent_temporary>
   </component>
@@ -382,18 +551,18 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18878865" sideWeight="0.69316596" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34867504" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15335052" sideWeight="0.6908078" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34615386" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30404463" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30683404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30385163" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3091922" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281027" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -431,7 +600,7 @@
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
-    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
     <option name="LIMIT_HISTORY" value="true" />
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
@@ -458,100 +627,101 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="223" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/../Mercury/pci/ch05/dorm.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="227" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="239" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch05/optimization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch05/socialNetwork.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="28" selection-start="525" selection-end="525" vertical-scroll-proportion="0.64593303" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch06/akismet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="737" selection-end="737" vertical-scroll-proportion="0.22292994" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch06/akismetTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0955414" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch06/docClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch06/feedFilter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch06/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch07/zillow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="46" selection-start="1318" selection-end="1318" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://D:/Develop/Anaconda/Lib/urllib2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1183" column="0" selection-start="42475" selection-end="42475" vertical-scroll-proportion="0.33255813" />
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1480" column="0" selection-start="59057" selection-end="59057" vertical-scroll-proportion="0.74820143" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch07/hotOrNot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="41" selection-start="2723" selection-end="2723" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch07/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="25" selection-start="164" selection-end="164" vertical-scroll-proportion="0.4945055" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Mercury/pci/ch07/treePredict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="78" selection-end="78" vertical-scroll-proportion="0.13186814" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="403" column="39" selection-start="28240" selection-end="28240" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/cpp/clang/CubicBezier.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="869" column="27" selection-start="39731" selection-end="39731" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
+    <entry file="file://$PROJECT_DIR$/WaveletVectorization/cpp/msvc/CubicBezier.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Develop/Anaconda/Lib/multiprocessing/pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="293" column="39" selection-start="9997" selection-end="9997" vertical-scroll-proportion="0.52340424" />
-      </provider>
-    </entry>
-    <entry file="file://D:/Develop/Anaconda/Lib/site-packages/scipy/optimize/_minimize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="27" selection-start="1508" selection-end="1521" vertical-scroll-proportion="0.49148935" />
-      </provider>
-    </entry>
-    <entry file="file://D:/Develop/Anaconda/Lib/site-packages/numpy/core/numeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="226" column="20" selection-start="6677" selection-end="6677" vertical-scroll-proportion="0.3319149" />
-      </provider>
-    </entry>
-    <entry file="file://D:/Develop/Anaconda/Lib/site-packages/scipy/integrate/quadrature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="4" selection-start="3089" selection-end="3089" vertical-scroll-proportion="0.3319149" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-347824807/numpy/core/multiarray.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="353" column="13" selection-start="13761" selection-end="13761" vertical-scroll-proportion="0.33284885" />
-      </provider>
-    </entry>
-    <entry file="file://D:/Develop/Anaconda/Lib/site-packages/scipy/misc/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="330" column="4" selection-start="8627" selection-end="8627" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-347824807/__builtin__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="867" column="8" selection-start="27596" selection-end="27596" vertical-scroll-proportion="0.3319149" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/QuadraticBezier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="31" selection-start="85" selection-end="85" vertical-scroll-proportion="0.06410257" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/util/solver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="745" selection-end="745" vertical-scroll-proportion="0.3318078" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/contour/CubicBezier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="0" selection-start="4355" selection-end="4355" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WaveletVectorization/python/vectorizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="16" selection-start="1696" selection-end="1700" vertical-scroll-proportion="0.5886628">
+        <state line="866" column="27" selection-start="39644" selection-end="39644" vertical-scroll-proportion="0.50660795">
           <folding />
         </state>
       </provider>

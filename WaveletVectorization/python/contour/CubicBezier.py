@@ -399,9 +399,9 @@ class CubicBezier:
 
         def helper(t):
             if self.Yp(t) >= -eps:  # >= 0
-                return CubicBezier.cpsi_1d(self.X(t)) * CubicBezier.dF_dp(i, t)
+                return CubicBezier.cphi_1d(self.X(t)) * CubicBezier.dF_dp(i, t)
             else:  # < 0
-                return -CubicBezier.cpsi_1d(self.X(t)) * CubicBezier.dF_dp(i, t)
+                return -CubicBezier.cphi_1d(self.X(t)) * CubicBezier.dF_dp(i, t)
 
         result = 0
         a, b, c, d = CubicBezier.cubicCoefficients(self.y0, self.y1, self.y2, self.y3)

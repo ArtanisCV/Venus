@@ -862,9 +862,9 @@ public:
         auto helper = [this, eps, i](double t) -> double
         {
             if (this->Yp(t) >= -eps)  // >= 0
-                return cpsi_1d(this->X(t)) * dF_dp(i, t);
+                return cphi_1d(this->X(t)) * dF_dp(i, t);
             else  // < 0
-                return -cpsi_1d(this->X(t)) * dF_dp(i, t);
+                return -cphi_1d(this->X(t)) * dF_dp(i, t);
         };
 
         auto result = 0.0;
