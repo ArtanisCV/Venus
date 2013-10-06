@@ -1,13 +1,12 @@
 from subprocess import Popen, PIPE
 from svmutil import *
 import os
+import sys
 import random
 
 __author__ = 'Artanis'
 
 svmScaleExe = r'.\bin\svm-scale.exe'
-svmTrainExe = r'.\bin\svm-train.exe'
-tmpTrainFile = "tmp_train"
 
 
 def scaleProblem(trainFilePath, scaledFileName, rangeFileName):
@@ -31,42 +30,18 @@ def readProblem(filePath):
     return Y, X
 
 
-# Give me a label
-def buildProblem(label, Y, X, fileName):
-    # build a binary classification problem
-    fd = open(fileName, "w")
+def buildModel(label, trainY, trainX, c, g):
+    # build a binary classification model
+    tmpY = []
+    for y in trainY:
+        tmpY.append(y == label and 1 or -1)
 
-    for i in range(len(Y)):
-        if label == Y[i]:
-            fd.write("+1")
-        else:
-            fd.write("-1")
-        for j in range(len(X[i])):
-            fd.write(" " + str(j + 1) + ":" + str(X[i][j]))
-        fd.write("\n")
-
-    fd.close()
+    problem = svm_problem(tmpY, trainX)
+    param = svm_parameter('-c %f -g %f -b 1 -q' % (c, g))
+    return svm_train(problem, param)
 
 
-def trainProblem(c, g, trainFileName):
-    modelFileName = "tmp_model"
-
-    #Y, X = readProblem(trainFileName)
-    #problem = svm_problem(Y, X)
-    #param = svm_parameter('-c %f -g %f -b 1 -q' % (c, g))
-    #return svm_train(problem, param)
-
-    cmd = "%s -c %f -g %f -b 1 -q %s %s" % (svmTrainExe, c, g, trainFileName, modelFileName)
-    Popen(cmd, shell=True, stdout=PIPE).communicate()
-
-    model = svm_load_model(modelFileName)
-    os.remove(modelFileName)
-    return model
-
-
-def crossValidation(Y, X, fold, c, g):
-    length = len(X)
-    uniLabels = sorted(set(Y))
+def genPerm(length):
     perm = [i for i in range(length)]
 
     for i in range(length):
@@ -76,6 +51,34 @@ def crossValidation(Y, X, fold, c, g):
         perm[i] = perm[j]
         perm[j] = tmp
 
+    return perm
+
+
+def divideDataset(Y, X, perm, begin, end):
+    length = len(Y)
+    selectedY = []
+    selectedX = []
+    remainedY = []
+    remainedX = []
+
+    for j in range(length):
+        idx = perm[j]
+
+        if begin <= j < end:
+            selectedY.append(Y[idx])
+            selectedX.append(X[idx])
+        else:
+            remainedY.append(Y[idx])
+            remainedX.append(X[idx])
+
+    return selectedY, selectedX, remainedY, remainedX
+
+
+def crossValidation(Y, X, fold, c, g):
+    length = len(X)
+    uniLabels = sorted(set(Y))
+
+    perm = genPerm(length)
     foldStart = []
 
     for i in range(fold + 1):
@@ -84,43 +87,17 @@ def crossValidation(Y, X, fold, c, g):
     nCorrect = 0
 
     for i in range(fold):
-        begin = foldStart[i]
-        end = foldStart[i + 1]
-
-        trainY = []
-        trainX = []
-        testY = []
-        testX = []
-
-        for j in range(length):
-            idx = perm[j]
-
-            if begin <= j < end:
-                testY.append(Y[idx])
-                testX.append(X[idx])
-            else:
-                trainY.append(Y[idx])
-                trainX.append(X[idx])
+        testY, testX, trainY, trainX = divideDataset(Y, X, perm, foldStart[i], foldStart[i + 1])
 
         models = []
-
         for label in uniLabels:
-            tmpY = []
-            for y in trainY:
-                tmpY.append(y == label and 1 or -1)
-
-            problem = svm_problem(tmpY, trainX)
-            param = svm_parameter('-c %f -g %f -b 1 -q' % (c, g))
-            models.append(svm_train(problem, param))
-
-            #buildProblem(label, trainY, trainX, tmpTrainFile)
-            #models.append(trainProblem(c, g, tmpTrainFile))
+            models.append(buildModel(label, trainY, trainX, c, g))
 
         predictYs = [-1] * len(testY)
         predictProb = [-1.0] * len(testY)
 
         for j in range(len(models)):
-            results = svm_predict(testY, testX, models[j], '-b 1')
+            results = svm_predict(testY, testX, models[j], '-b 1 -q')
 
             for k in range(len(testX)):
                 if int(results[0][k] + 0.5) == 1:
@@ -155,9 +132,8 @@ def range_f(begin, end, step):
 
 if __name__ == "__main__":
     assert os.path.exists(svmScaleExe), "svm-scale executable not found"
-    assert os.path.exists(svmTrainExe), "svm-train executable not found"
 
-    trainFilePath = 'sub.txt'
+    trainFilePath = sys.argv[1]
     assert os.path.exists(trainFilePath), "training file not found"
     trainFileName = os.path.split(trainFilePath)[1]
 
@@ -183,24 +159,4 @@ if __name__ == "__main__":
             print 2**c, 2**g, acc
 
     fd.close()
-
-    #trainFile = 'sub.txt.scale'
-    #labels, features = readProblem(trainFile)
-    #length = len(features)
-    #
-    #perm = [i for i in range(length)]
-    #for i in range(length):
-    #    j = i + random.randint(0, length - i - 1)
-    #
-    #    tmp = perm[i]
-    #    perm[i] = perm[j]
-    #    perm[j] = tmp
-    #
-    #testLabels = []
-    #testFeatures = []
-    #trainLabels = []
-    #trainFeatures = []
-    #
-    #for i in range(length):
-    #    labels[i] = labels[i] == 1 and 1 or -1
 
