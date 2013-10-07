@@ -138,7 +138,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2:
         trainFilePath = sys.argv[1]
     else:
-        trainFilePath = 'full.txt'
+        trainFilePath = 'sub.txt'
     assert os.path.exists(trainFilePath), "training file not found"
     trainFileName = os.path.split(trainFilePath)[1]
 
