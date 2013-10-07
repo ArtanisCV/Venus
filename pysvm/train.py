@@ -1,4 +1,5 @@
 from subprocess import Popen, PIPE
+import time
 from svmutil import *
 import os
 import sys
@@ -92,8 +93,9 @@ def crossValidation(Y, X, fold, c, g):
         models = []
         for label in uniLabels:
             models.append(buildModel(label, trainY, trainX, c, g))
+            print '.',
 
-        predictYs = [-1] * len(testY)
+        predictY = [-1] * len(testY)
         predictProb = [-1.0] * len(testY)
 
         for j in range(len(models)):
@@ -107,11 +109,11 @@ def crossValidation(Y, X, fold, c, g):
 
                 if prob > predictProb[k]:
                     predictProb[k] = prob
-                    predictYs[k] = uniLabels[j]
+                    predictY[k] = uniLabels[j]
 
         for j in range(len(testX)):
-            assert predictYs[j] != -1
-            if predictYs[j] == testY[j]:
+            assert predictY[j] != -1
+            if predictY[j] == testY[j]:
                 nCorrect += 1
 
     return float(nCorrect) / length
@@ -133,7 +135,10 @@ def range_f(begin, end, step):
 if __name__ == "__main__":
     assert os.path.exists(svmScaleExe), "svm-scale executable not found"
 
-    trainFilePath = sys.argv[1]
+    if len(sys.argv) >= 2:
+        trainFilePath = sys.argv[1]
+    else:
+        trainFilePath = 'full.txt'
     assert os.path.exists(trainFilePath), "training file not found"
     trainFileName = os.path.split(trainFilePath)[1]
 
@@ -151,6 +156,7 @@ if __name__ == "__main__":
     g_seq = range_f(g_begin, g_end, g_step)
 
     fd = open("cross.txt", "w")
+    begin = time.time()
 
     for c in c_seq:
         for g in g_seq:
@@ -158,5 +164,6 @@ if __name__ == "__main__":
             fd.write(str(2**c) + ' ' + str(2**g) + ' ' + str(acc) + '\n')
             print 2**c, 2**g, acc
 
+    print 'It costs ' + str(time.time() - begin) + ' sec.'
     fd.close()
 
